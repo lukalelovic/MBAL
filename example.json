@@ -1,0 +1,24 @@
+{
+    "systemName": "train-ticket-system",
+    "nodes": [
+        {
+            "nodeName": "ts-admin-user-service",
+            "recieves": {},
+            "sends": {
+                "PUT": ["ts-user-service"],
+                "GET": ["ts-user-service"],
+                "DELETE": ["ts-user-service"]
+            }
+        }, 
+        {
+            "nodeName": "ts-basic-service",
+            "recieves": {
+                "POST": ["ts-ticketinfo-service"],
+                "GET": ["ts-ticketinfo-service"]
+            },
+            "sends": {
+                "GET": ["ts-price-service"]
+            }
+        }
+    ]
+}

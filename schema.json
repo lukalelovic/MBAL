@@ -1,0 +1,63 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "systemName": {
+            "type": "string"
+        },
+        "nodes": {
+            "type": "array",
+            "items": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "nodeName": {
+                            "type": "string"
+                        },
+                        "recieves": {
+                            "type": "object"
+                        },
+                        "sends": {
+                            "type": "object",
+                            "properties": {
+                                "PUT": {
+                                    "type": "array",
+                                    "items": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "GET": {
+                                    "type": "array",
+                                    "items": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "DELETE": {
+                                    "type": "array",
+                                    "items": [
+                                        {
+                                            "type": "string"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "required": [
+                        "nodeName",
+                        "recieves",
+                        "sends"
+                    ]
+                }
+            ]
+        }
+    },
+    "required": [
+        "systemName",
+        "nodes"
+    ]
+}
