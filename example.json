@@ -3,7 +3,6 @@
     "nodes": [
         {
             "nodeName": "ts-admin-user-service",
-            "recievesFrom": {},
             "sendsTo": [
                 {
                     "nodeName": "ts-user-service",
@@ -23,6 +22,24 @@
                     ]
                 }
             ]
-        }
+        },
+        {
+            "nodeName": "ts-cancel-service",
+            "sendsTo": [
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "requestName": "saveOrderInfo",
+                            "requestType": "PUT"
+                        }, 
+                        {
+                            "requestName": "getOrderById",
+                            "requestType": "GET"
+                        }
+                    ]
+                }
+            ]
+        },
     ]
 }

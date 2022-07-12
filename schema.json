@@ -56,7 +56,6 @@
                     },
                     "required": [
                         "nodeName",
-                        "recievesFrom",
                         "sendsTo"
                     ]
                 }
