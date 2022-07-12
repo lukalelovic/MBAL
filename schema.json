@@ -14,43 +14,50 @@
                         "nodeName": {
                             "type": "string"
                         },
-                        "recieves": {
+                        "recievesFrom": {
                             "type": "object"
                         },
-                        "sends": {
-                            "type": "object",
-                            "properties": {
-                                "PUT": {
-                                    "type": "array",
-                                    "items": [
-                                        {
+                        "sendsTo": {
+                            "type": "array",
+                            "items": [
+                                {
+                                    "type": "object",
+                                    "properties": {
+                                        "nodeName": {
                                             "type": "string"
+                                        },
+                                        "requests": {
+                                            "type": "array",
+                                            "items": [
+                                                {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "requestName": {
+                                                            "type": "string"
+                                                        },
+                                                        "requestType": {
+                                                            "type": "string"
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "requestName",
+                                                        "requestType"
+                                                    ]
+                                                }]
                                         }
-                                    ]
-                                },
-                                "GET": {
-                                    "type": "array",
-                                    "items": [
-                                        {
-                                            "type": "string"
-                                        }
-                                    ]
-                                },
-                                "DELETE": {
-                                    "type": "array",
-                                    "items": [
-                                        {
-                                            "type": "string"
-                                        }
+                                    },
+                                    "required": [
+                                        "nodeName",
+                                        "requests"
                                     ]
                                 }
-                            }
+                            ]
                         }
                     },
                     "required": [
                         "nodeName",
-                        "recieves",
-                        "sends"
+                        "recievesFrom",
+                        "sendsTo"
                     ]
                 }
             ]
