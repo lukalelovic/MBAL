@@ -1,6 +1,6 @@
 {
   "systemName": "RedHat-Pipeline",
-  "systemVersion": "1.0.0",
+  "systemVersion": "1.3.0",
   "nodes": [
     {
       "nodeName": "Ingress-service",
