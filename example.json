@@ -1,45 +1,301 @@
 {
-    "systemName": "train-ticket-system",
+    "systemName": "RedHat-Pipeline",
+    "systemVersion": "1.0.0",
     "nodes": [
         {
-            "nodeName": "ts-admin-user-service",
-            "sendsTo": [
+            "nodeName": "Customer-cluter",
+            "nodeType": "cluster",
+            "nodeID": 0,
+            "dependencies": [
+            ]
+        },
+        {
+            "nodeName": "Insights-archive",
+            "nodeType": "archive",
+            "nodeID": 1,
+            "dependencies": [
                 {
-                    "nodeName": "ts-user-service",
-                    "requests": [
-                        {
-                            "requestName": "createAndModifyRoute",
-                            "requestType": "POST"
-                        }, 
-                        {
-                            "requestName": "queryAll",
-                            "requestType": "GET"
-                        }, 
-                        {
-                            "requestName": "deleteRoute",
-                            "requestType": "DELETE"
-                        }
-                    ]
+                    "nodeID": 0
                 }
             ]
         },
         {
-            "nodeName": "ts-cancel-service",
-            "sendsTo": [
+            "nodeName": "Ingress-service",
+            "nodeType": "service",
+            "nodeID": 2,
+            "dependencies": [
                 {
-                    "nodeName": "ts-order-service",
-                    "requests": [
-                        {
-                            "requestName": "saveOrderInfo",
-                            "requestType": "PUT"
-                        }, 
-                        {
-                            "requestName": "getOrderById",
-                            "requestType": "GET"
-                        }
-                    ]
+                    "nodeID": 1
                 }
             ]
         },
+        {
+            "nodeName": "Kafka-topic-platform.upload.buckit",
+            "nodeType": "kafka",
+            "nodeID": 3,
+            "dependencies": [
+                {
+                    "nodeID": 2
+                }
+            ]
+        },
+        {
+            "nodeName": "SHA-extractor",
+            "nodeType": "extractor",
+            "nodeID": 4,
+            "dependencies": [
+                {
+                    "nodeID": 2
+                },
+                {
+                    "nodeID": 7
+                }
+            ]
+        },
+        {
+            "nodeName": "ccx-data-pipeline",
+            "nodeType": "pipeline",
+            "nodeID": 5,
+            "dependencies": [
+                {
+                    "nodeID": 3
+                }
+            ]
+        },
+        {
+            "nodeName": "Insights-storage-broker",
+            "nodeType": "storage-broker",
+            "nodeID": 6,
+            "dependencies": [
+                {
+                    "nodeID": 3
+                }
+            ]
+        },
+        {
+            "nodeName": "S3-bucket",
+            "nodeType": "bucket",
+            "nodeID": 7,
+            "dependencies": [
+                {
+                    "nodeID": 6
+                }
+            ]
+        },
+        {
+            "nodeName": "Kafka-topic-ccx.ocp.results",
+            "nodeType": "kafka",
+            "nodeID": 8,
+            "dependencies": [
+                {
+                    "nodeID": 5
+                }
+            ]
+        },
+        {
+            "nodeName": "Insights-results-db-writer",
+            "nodeType": "writer",
+            "nodeID": 9,
+            "dependencies": [
+                {
+                    "nodeID": 8
+                }
+            ]
+        },
+        {
+            "nodeName": "AWS-RDS-DB",
+            "nodeType": "database",
+            "nodeID": 10,
+            "dependencies": [
+                {
+                    "nodeID": 9
+                },
+                {
+                    "nodeID": 11
+                }
+            ]
+        },
+        {
+            "nodeName": "Insights-results-aggregator",
+            "nodeType": "aggregator",
+            "nodeID": 11,
+            "dependencies": [
+                {
+                    "nodeID": 10
+                },
+                {
+                    "nodeID": 12
+                }
+            ]
+        },
+        {
+            "nodeName": "ccx-smart-proxy",
+            "nodeType": "proxy",
+            "nodeID": 12,
+            "dependencies": [
+                {
+                    "nodeID": 11
+                },
+                {
+                    "nodeID": 13
+                },
+                {
+                    "nodeID": 14
+                },
+                {
+                    "nodeID": 15
+                },
+                {
+                    "nodeID": 17
+                }
+            ]
+        },
+        {
+            "nodeName": "ccx-Insights-content-service",
+            "nodeType": "service",
+            "nodeID": 13,
+            "dependencies": [
+            ]
+        },
+        {
+            "nodeName": "AMS",
+            "nodeType": "service",
+            "nodeID": 14,
+            "dependencies": [
+                {
+                "nodeID": 12
+                }
+            ]
+        },
+        {
+            "nodeName": "API-v1",
+            "nodeType": "API",
+            "nodeID": 15,
+            "dependencies": [
+                {
+                "nodeID": 12
+                },
+                {
+                "nodeID": 16
+                }
+            ]
+        },
+        {
+            "nodeName": "REST-API-consumers",
+            "nodeType": "API",
+            "nodeID": 16,
+            "dependencies": [
+                {
+                "nodeID": 15
+                }
+            ]
+        },
+        {
+            "nodeName": "API-v2",
+            "nodeType": "API",
+            "nodeID": 17,
+            "dependencies": [
+                {
+                "nodeID": 12
+                },
+                {
+                "nodeID": 18
+                }
+            ]
+        },
+        {
+            "nodeName": "Insights-Advisor",
+            "nodeType": "advisor",
+            "nodeID": 18,
+            "dependencies": [
+                {
+                "nodeID": 17
+                }
+            ]
+        },
+        {
+            "nodeName": "notification-writer",
+            "nodeType": "writer",
+            "nodeID": 19,
+            "dependencies": [
+                {
+                "nodeID": 8
+                }
+            ]
+        },
+        {
+            "nodeName": "Notification-DB",
+            "nodeType": "database",
+            "nodeID": 20,
+            "dependencies": [
+                {
+                    "nodeID": 19
+                }
+            ]
+        },
+        {
+            "nodeName": "Notification-rules",
+            "nodeType": "rules",
+            "nodeID": 21,
+            "dependencies": [
+            ]
+        },
+        {
+            "nodeName": "ccx-notification-service",
+            "nodeType": "service",
+            "nodeID": 22,
+            "dependencies": [
+                {
+                    "nodeID": 20
+                }
+            ]
+        },
+        {
+            "nodeName": "Kafka-topic-platform.notifications.ingress",
+            "nodeType": "service",
+            "nodeID": 23,
+            "dependencies": [
+                {
+                    "nodeID": 22
+                }
+            ]
+        },
+        {
+            "nodeName": "Customer",
+            "nodeType": "customer",
+            "nodeID": 24,
+            "dependencies": [
+            ]
+        },
+        {
+            "nodeName": "Kafka-topic-archive-results",
+            "nodeType": "kafka",
+            "nodeID": 25,
+            "dependencies": [
+                {
+                    "nodeID": 4
+                }
+            ]
+        },
+        {
+            "nodeName": "archive-db-writer",
+            "nodeType": "writer",
+            "nodeID": 26,
+            "dependencies": [
+                {
+                    "nodeID": 25
+                }
+            ]
+        },
+        {
+            "nodeName": "CVEs-database",
+            "nodeType": "database",
+            "nodeID": 27,
+            "dependencies": [
+                {
+                    "nodeID": 26
+                }
+            ]
+        }
     ]
 }

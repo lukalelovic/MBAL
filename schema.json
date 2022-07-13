@@ -1,69 +1,58 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-        "systemName": {
-            "type": "string"
-        },
-        "nodes": {
-            "type": "array",
-            "items": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "nodeName": {
-                            "type": "string"
-                        },
-                        "recievesFrom": {
-                            "type": "object"
-                        },
-                        "sendsTo": {
-                            "type": "array",
-                            "items": [
-                                {
-                                    "type": "object",
-                                    "properties": {
-                                        "nodeName": {
-                                            "type": "string"
-                                        },
-                                        "requests": {
-                                            "type": "array",
-                                            "items": [
-                                                {
-                                                    "type": "object",
-                                                    "properties": {
-                                                        "requestName": {
-                                                            "type": "string"
-                                                        },
-                                                        "requestType": {
-                                                            "type": "string"
-                                                        }
-                                                    },
-                                                    "required": [
-                                                        "requestName",
-                                                        "requestType"
-                                                    ]
-                                                }]
-                                        }
-                                    },
-                                    "required": [
-                                        "nodeName",
-                                        "requests"
-                                    ]
-                                }
-                            ]
-                        }
-                    },
-                    "required": [
-                        "nodeName",
-                        "sendsTo"
-                    ]
-                }
-            ]
-        }
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "systemName": {
+      "type": "string"
     },
-    "required": [
-        "systemName",
-        "nodes"
-    ]
+    "systemVersion": {
+      "type": "string"
+    },
+    "nodes": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "nodeName": {
+              "type": "string"
+            },
+            "nodeType": {
+              "type": "string"
+            },
+            "nodeID": {
+              "type": "integer"
+            },
+            "dependencies": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "nodeID": {
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "nodeID"
+                  ]
+                }
+              ]
+            }
+          },
+          "required": [
+            "nodeName",
+            "nodeType",
+            "nodeID",
+            "dependencies"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "systemName",
+    "systemVersion",
+    "nodes"
+  ]
 }
