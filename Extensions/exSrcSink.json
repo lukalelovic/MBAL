@@ -1,0 +1,218 @@
+{
+  "systemName": "RedHat-Pipeline",
+  "systemVersion": "1.3.0",
+  "nodes": [
+    {
+      "nodeName": "Ingress-service",
+      "nodeType": "service",
+      "nodeID": 0,
+      "dependencies": [],
+      "targets": [1]
+    },
+    {
+      "nodeName": "Kafka-topic-platform.upload.buckit",
+      "nodeType": "kafka",
+      "nodeID": 1,
+      "dependencies": [0],
+      "targets": [2, 3, 4]
+    },
+    {
+      "nodeName": "SHA-extractor",
+      "nodeType": "extractor",
+      "nodeID": 2,
+      "dependencies": [1, 5],
+      "targets": [20]
+    },
+    {
+      "nodeName": "ccx-data-pipeline",
+      "nodeType": "pipeline",
+      "nodeID": 3,
+      "dependencies": [1],
+      "targets": [6]
+    },
+    {
+      "nodeName": "Insights-storage-broker",
+      "nodeType": "storage-broker",
+      "nodeID": 4,
+      "dependencies": [1],
+      "targets": [5]
+    },
+    {
+      "nodeName": "S3-bucket",
+      "nodeType": "bucket",
+      "nodeID": 5,
+      "dependencies": [4],
+      "targets": [2]
+    },
+    {
+      "nodeName": "Kafka-topic-ccx.ocp.results",
+      "nodeType": "kafka",
+      "nodeID": 6,
+      "dependencies": [3],
+      "targets": [7, 15]
+    },
+    {
+      "nodeName": "Insights-results-db-writer",
+      "nodeType": "writer",
+      "nodeID": 7,
+      "dependencies": [6],
+      "targets": [8]
+    },
+    {
+      "nodeName": "AWS-RDS-DB",
+      "nodeType": "database",
+      "nodeID": 8,
+      "dependencies": [7, 9],
+      "targets": [9]
+    },
+    {
+      "nodeName": "Insights-results-aggregator",
+      "nodeType": "aggregator",
+      "nodeID": 9,
+      "dependencies": [8, 10],
+      "targets": [8, 10]
+    },
+    {
+      "nodeName": "ccx-smart-proxy",
+      "nodeType": "proxy",
+      "nodeID": 10,
+      "dependencies": [9, 11, 12, 13, 15],
+      "targets": [9, 12, 13, 15]
+    },
+    {
+      "nodeName": "ccx-Insights-content-service",
+      "nodeType": "service",
+      "nodeID": 11,
+      "dependencies": [],
+      "targets": [10]
+    },
+    {
+      "nodeName": "AMS",
+      "nodeType": "service",
+      "nodeID": 12,
+      "dependencies": [10],
+      "targets": [10]
+    },
+    {
+      "nodeName": "API-v1",
+      "nodeType": "API",
+      "nodeID": 13,
+      "dependencies": [10],
+      "targets": [10]
+    },
+    {
+      "nodeName": "API-v2",
+      "nodeType": "API",
+      "nodeID": 14,
+      "dependencies": [10],
+      "targets": [10]
+    },
+    {
+      "nodeName": "notification-writer",
+      "nodeType": "writer",
+      "nodeID": 15,
+      "dependencies": [6],
+      "targets": [16]
+    },
+    {
+      "nodeName": "Notification-DB",
+      "nodeType": "database",
+      "nodeID": 16,
+      "dependencies": [15],
+      "targets": [18]
+    },
+    {
+      "nodeName": "Notification-rules",
+      "nodeType": "rules",
+      "nodeID": 17,
+      "dependencies": [],
+      "targets": [18]
+    },
+    {
+      "nodeName": "ccx-notification-service",
+      "nodeType": "service",
+      "nodeID": 18,
+      "nodeDesc": [
+        "time clock"
+      ],
+      "dependencies": [16, 17],
+      "targets": [19]
+    },
+    {
+      "nodeName": "Kafka-topic-platform.notifications.ingress",
+      "nodeType": "service",
+      "nodeID": 19,
+      "dependencies": [18],
+      "targets": []
+    },
+    {
+      "nodeName": "Kafka-topic-archive-results",
+      "nodeType": "kafka",
+      "nodeID": 20,
+      "dependencies": [2],
+      "targets": [26]
+    },
+    {
+      "nodeName": "archive-db-writer",
+      "nodeType": "writer",
+      "nodeID": 21,
+      "dependencies": [20],
+      "targets": [22]
+    },
+    {
+      "nodeName": "CVEs-database",
+      "nodeType": "database",
+      "nodeID": 22,
+      "dependencies": [21],
+      "targets": []
+    }
+  ],
+  "srcSink": [
+    {
+      "nodeName": "Customer's-cluster",
+      "nodeType": "cluster",
+      "nodeID": 23,
+      "dependencies": [],
+      "targets": [24]
+    },
+    {
+      "nodeName": "Insights-archive",
+      "nodeType": "archive",
+      "nodeID": 24,
+      "dependencies": [23],
+      "targets": [0]
+    },
+    {
+      "nodeName": "REST-API-consumers",
+      "nodeType": "API-consumer",
+      "nodeID": 25,
+      "nodeDesc": [
+        "OCM UI consumer",
+        "ACM consumer",
+        "curl consumer",
+        "recieves response for cluster",
+        "sends REST API request (+JWT token)"
+      ],
+      "dependencies": [13],
+      "targets": [13]
+    },
+    {
+      "nodeName": "Insights-Advisor",
+      "nodeType": "advisor",
+      "nodeID": 26,
+      "nodeDesc": [
+        "recieves response",
+        "sends REST API request (+JWT token)"
+      ],
+      "dependencies": [14],
+      "targets": [14]
+    },
+    {
+      "nodeName": "Customer",
+      "nodeType": "archive",
+      "nodeID": 27,
+      "dependencies": [19],
+      "targets": []
+    }
+  ]
+}

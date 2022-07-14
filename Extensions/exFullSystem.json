@@ -1,0 +1,188 @@
+{
+  "systemName": "RedHat-Pipeline",
+  "systemVersion": "1.0.1",
+  "nodes": [
+    {
+      "nodeName": "Customer-cluter",
+      "nodeType": "cluster",
+      "nodeID": 0,
+      "dependencies": []
+    },
+    {
+      "nodeName": "Insights-archive",
+      "nodeType": "archive",
+      "nodeID": 1,
+      "dependencies": [0]
+    },
+    {
+      "nodeName": "Ingress-service",
+      "nodeType": "service",
+      "nodeID": 2,
+      "dependencies": [1]
+    },
+    {
+      "nodeName": "Kafka-topic-platform.upload.buckit",
+      "nodeType": "kafka",
+      "nodeID": 3,
+      "dependencies": [2]
+    },
+    {
+      "nodeName": "SHA-extractor",
+      "nodeType": "extractor",
+      "nodeID": 4,
+      "dependencies": [3, 7]
+    },
+    {
+      "nodeName": "ccx-data-pipeline",
+      "nodeType": "pipeline",
+      "nodeID": 5,
+      "dependencies": [3]
+    },
+    {
+      "nodeName": "Insights-storage-broker",
+      "nodeType": "storage-broker",
+      "nodeID": 6,
+      "dependencies": [3]
+    },
+    {
+      "nodeName": "S3-bucket",
+      "nodeType": "bucket",
+      "nodeID": 7,
+      "dependencies": [6]
+    },
+    {
+      "nodeName": "Kafka-topic-ccx.ocp.results",
+      "nodeType": "kafka",
+      "nodeID": 8,
+      "dependencies": [5]
+    },
+    {
+      "nodeName": "Insights-results-db-writer",
+      "nodeType": "writer",
+      "nodeID": 9,
+      "dependencies": [8]
+    },
+    {
+      "nodeName": "AWS-RDS-DB",
+      "nodeType": "database",
+      "nodeID": 10,
+      "dependencies": [9, 11]
+    },
+    {
+      "nodeName": "Insights-results-aggregator",
+      "nodeType": "aggregator",
+      "nodeID": 11,
+      "dependencies": [10, 12]
+    },
+    {
+      "nodeName": "ccx-smart-proxy",
+      "nodeType": "proxy",
+      "nodeID": 12,
+      "dependencies": [11, 13, 14, 15, 17]
+    },
+    {
+      "nodeName": "ccx-Insights-content-service",
+      "nodeType": "service",
+      "nodeID": 13,
+      "dependencies": []
+    },
+    {
+      "nodeName": "AMS",
+      "nodeType": "service",
+      "nodeID": 14,
+      "dependencies": [12]
+    },
+    {
+      "nodeName": "API-v1",
+      "nodeType": "API",
+      "nodeID": 15,
+      "dependencies": [12, 16]
+    },
+    {
+      "nodeName": "REST-API-consumers",
+      "nodeType": "API-consumer",
+      "nodeID": 16,
+      "nodeDesc": [
+        "OCM UI consumer",
+        "ACM consumer",
+        "curl consumer",
+        "recieves response for cluster",
+        "sends REST API request (+JWT token)"
+      ],
+      "dependencies": [15]
+    },
+    {
+      "nodeName": "API-v2",
+      "nodeType": "API",
+      "nodeID": 17,
+      "dependencies": [12, 18]
+    },
+    {
+      "nodeName": "Insights-Advisor",
+      "nodeType": "advisor",
+      "nodeID": 18,
+      "nodeDesc": [
+        "recieves response",
+        "sends REST API request (+JWT token)"
+      ],
+      "dependencies": [17]
+    },
+    {
+      "nodeName": "notification-writer",
+      "nodeType": "writer",
+      "nodeID": 19,
+      "dependencies": [8]
+    },
+    {
+      "nodeName": "Notification-DB",
+      "nodeType": "database",
+      "nodeID": 20,
+      "dependencies": [19]
+    },
+    {
+      "nodeName": "Notification-rules",
+      "nodeType": "rules",
+      "nodeID": 21,
+      "dependencies": []
+    },
+    {
+      "nodeName": "ccx-notification-service",
+      "nodeType": "service",
+      "nodeID": 22,
+      "nodeDesc": [
+        "clock"
+      ],
+      "dependencies": [20, 21]
+    },
+    {
+      "nodeName": "Kafka-topic-platform.notifications.ingress",
+      "nodeType": "service",
+      "nodeID": 23,
+      "dependencies": [22]
+    },
+    {
+      "nodeName": "Customer",
+      "nodeType": "customer",
+      "nodeID": 24,
+      "dependencies": [23]
+    },
+    {
+      "nodeName": "Kafka-topic-archive-results",
+      "nodeType": "kafka",
+      "nodeID": 25,
+      "dependencies": [4]
+    },
+    {
+      "nodeName": "archive-db-writer",
+      "nodeType": "writer",
+      "nodeID": 26,
+      "dependencies": [25]
+    },
+    {
+      "nodeName": "CVEs-database",
+      "nodeType": "database",
+      "nodeID": 27,
+      "dependencies": [26]
+    }
+  ]
+}
