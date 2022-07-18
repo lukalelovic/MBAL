@@ -10,61 +10,61 @@
         },
         {
             "nodeName": "Kafka-topic-platform.upload.buckit",
-            "nodeType": "kafka",
+            "nodeType": "processor",
             "nodeID": 1,
             "dependencies": [0]
         },
         {
             "nodeName": "SHA-extractor",
-            "nodeType": "extractor",
+            "nodeType": "handler",
             "nodeID": 2,
             "dependencies": [1, 5]
         },
         {
             "nodeName": "ccx-data-pipeline",
-            "nodeType": "pipeline",
+            "nodeType": "processor",
             "nodeID": 3,
             "dependencies": [1]
         },
         {
             "nodeName": "Insights-storage-broker",
-            "nodeType": "storage-broker",
+            "nodeType": "storage",
             "nodeID": 4,
             "dependencies": [1]
         },
         {
             "nodeName": "S3-bucket",
-            "nodeType": "bucket",
+            "nodeType": "storage",
             "nodeID": 5,
             "dependencies": [4]
         },
         {
             "nodeName": "Kafka-topic-ccx.ocp.results",
-            "nodeType": "kafka",
+            "nodeType": "processor",
             "nodeID": 6,
             "dependencies": [3]
         },
         {
             "nodeName": "Insights-results-db-writer",
-            "nodeType": "writer",
+            "nodeType": "handler",
             "nodeID": 7,
             "dependencies": [6]
         },
         {
             "nodeName": "AWS-RDS-DB",
-            "nodeType": "database",
+            "nodeType": "storage",
             "nodeID": 8,
             "dependencies": [7, 9]
         },
         {
             "nodeName": "Insights-results-aggregator",
-            "nodeType": "aggregator",
+            "nodeType": "storage",
             "nodeID": 9,
             "dependencies": [8, 10]
         },
         {
             "nodeName": "ccx-smart-proxy",
-            "nodeType": "proxy",
+            "nodeType": "processor",
             "nodeID": 10,
             "dependencies": [9, 11, 12, 13, 15]
         },
@@ -82,31 +82,31 @@
         },
         {
             "nodeName": "API-v1",
-            "nodeType": "API",
+            "nodeType": "interface",
             "nodeID": 13,
             "dependencies": [10]
         },
         {
             "nodeName": "API-v2",
-            "nodeType": "API",
+            "nodeType": "interface",
             "nodeID": 14,
             "dependencies": [10]
         },
         {
             "nodeName": "notification-writer",
-            "nodeType": "writer",
+            "nodeType": "handler",
             "nodeID": 15,
             "dependencies": [6]
         },
         {
             "nodeName": "Notification-DB",
-            "nodeType": "database",
+            "nodeType": "storage",
             "nodeID": 16,
             "dependencies": [15]
         },
         {
             "nodeName": "Notification-rules",
-            "nodeType": "rules",
+            "nodeType": "configuration",
             "nodeID": 17,
             "dependencies": []
         },
@@ -124,19 +124,19 @@
         },
         {
             "nodeName": "Kafka-topic-archive-results",
-            "nodeType": "kafka",
+            "nodeType": "processor",
             "nodeID": 20,
             "dependencies": [2]
         },
         {
             "nodeName": "archive-db-writer",
-            "nodeType": "writer",
+            "nodeType": "handler",
             "nodeID": 21,
             "dependencies": [20]
         },
         {
             "nodeName": "CVEs-database",
-            "nodeType": "database",
+            "nodeType": "storage",
             "nodeID": 22,
             "dependencies": [21]
         }
