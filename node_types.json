@@ -1,0 +1,15 @@
+{
+    "nodeTypes": [
+        "customer",
+        "archive",
+        "kafka",
+        "service",
+        "bucket",
+        "pipeline",
+        "proxy",
+        "writer",
+        "database",
+        "config",
+        "API"
+    ]
+}
