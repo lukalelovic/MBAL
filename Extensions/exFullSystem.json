@@ -4,7 +4,7 @@
   "nodes": [
     {
       "nodeName": "Customer-cluster",
-      "nodeType": "customer",
+      "nodeType": "srcSink",
       "nodeID": 0,
       "dependencies": []
     },
@@ -100,7 +100,7 @@
     },
     {
       "nodeName": "REST-API-consumers",
-      "nodeType": "customer",
+      "nodeType": "srcSink",
       "nodeID": 16,
       "nodeDesc": [
         "OCM UI consumer",
@@ -119,7 +119,7 @@
     },
     {
       "nodeName": "Insights-Advisor",
-      "nodeType": "customer",
+      "nodeType": "srcSink",
       "nodeID": 18,
       "nodeDesc": [
         "recieves response",

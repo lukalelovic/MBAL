@@ -1,6 +1,7 @@
 {
     "nodeTypes": [
         "customer",
+        "srcSink",
         "archive",
         "kafka",
         "service",
