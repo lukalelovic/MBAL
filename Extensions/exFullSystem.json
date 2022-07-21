@@ -1,7 +1,7 @@
 {
-  "systemName": "RedHat-Pipeline",
-  "systemVersion": "1.0.1",
-  "nodes": [
+    "systemName": "RedHat-Pipeline",
+    "systemVersion": "1.0.1",
+    "nodes": [
     {
       "nodeName": "Customer-cluster",
       "nodeType": "srcSink",
@@ -30,13 +30,15 @@
       "nodeName": "SHA-extractor",
       "nodeType": "pipeline",
       "nodeID": 4,
-      "dependencies": [3, 7]
+      "dependencies": [3, 7],
+      "previousSteps": ["#1", "#2"]
     },
     {
       "nodeName": "ccx-data-pipeline",
       "nodeType": "pipeline",
       "nodeID": 5,
-      "dependencies": [3]
+      "dependencies": [3],
+      "previousSteps": ["#1"]
     },
     {
       "nodeName": "Insights-storage-broker",
@@ -54,31 +56,36 @@
       "nodeName": "Kafka-topic-ccx.ocp.results",
       "nodeType": "kafka",
       "nodeID": 8,
-      "dependencies": [5]
+      "dependencies": [5],
+      "previousSteps": ["#3"]
     },
     {
       "nodeName": "Insights-results-db-writer",
       "nodeType": "writer",
       "nodeID": 9,
-      "dependencies": [8]
+      "dependencies": [8],
+      "previousSteps": ["#4"]
     },
     {
       "nodeName": "AWS-RDS-DB",
       "nodeType": "database",
       "nodeID": 10,
-      "dependencies": [9, 11]
+      "dependencies": [9, 11],
+      "previousSteps": ["#5", "#10"]
     },
     {
       "nodeName": "Insights-results-aggregator",
       "nodeType": "service",
       "nodeID": 11,
-      "dependencies": [10, 12]
+      "dependencies": [10, 12],
+      "previousSteps": ["#6", "#9"]
     },
     {
       "nodeName": "ccx-smart-proxy",
       "nodeType": "proxy",
       "nodeID": 12,
-      "dependencies": [11, 13, 14, 15, 17]
+      "dependencies": [11, 13, 14, 15, 17],
+      "previousSteps": ["#7", "#8"]
     },
     {
       "nodeName": "ccx-Insights-content-service",
@@ -131,13 +138,15 @@
       "nodeName": "notification-writer",
       "nodeType": "writer",
       "nodeID": 19,
-      "dependencies": [8]
+      "dependencies": [8],
+      "previousSteps": ["#11"]
     },
     {
       "nodeName": "Notification-DB",
       "nodeType": "database",
       "nodeID": 20,
-      "dependencies": [19]
+      "dependencies": [19],
+      "previousSteps": ["#12"]
     },
     {
       "nodeName": "Notification-rules",
@@ -152,37 +161,43 @@
       "nodeDesc": [
         "clock"
       ],
-      "dependencies": [20, 21]
+      "dependencies": [20, 21],
+      "previousSteps": ["#13", "#14"]
     },
     {
       "nodeName": "Kafka-topic-platform.notifications.ingress",
       "nodeType": "kafka",
       "nodeID": 23,
-      "dependencies": [22]
+      "dependencies": [22],
+      "previousSteps": ["#15"]
     },
     {
       "nodeName": "Customer",
       "nodeType": "customer",
       "nodeID": 24,
-      "dependencies": [23]
+      "dependencies": [23],
+      "previousSteps": ["#16"]
     },
     {
       "nodeName": "Kafka-topic-archive-results",
       "nodeType": "kafka",
       "nodeID": 25,
-      "dependencies": [4]
+      "dependencies": [4],
+      "previousSteps": ["#17"]
     },
     {
       "nodeName": "archive-db-writer",
       "nodeType": "writer",
       "nodeID": 26,
-      "dependencies": [25]
+      "dependencies": [25],
+      "previousSteps": ["#18"]
     },
     {
       "nodeName": "CVEs-database",
       "nodeType": "database",
       "nodeID": 27,
-      "dependencies": [26]
+      "dependencies": [26],
+      "previousSteps": ["#19"]
     }
   ]
 }

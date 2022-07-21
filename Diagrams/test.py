@@ -1,5 +1,4 @@
 from modulefinder import EXTENDED_ARG
-from turtle import color
 from diagrams import Diagram, Edge
 from diagrams.aws.compute import EC2
 from diagrams.aws.storage import SimpleStorageServiceS3Bucket
@@ -10,7 +9,6 @@ from diagrams.aws.analytics import ManagedStreamingForKafka
 from diagrams.aws.enablement import ManagedServices, ProfessionalServices
 from diagrams.aws.storage import S3GlacierArchive
 from diagrams.aws.management import Config, ManagedServices as MS
-from diagrams.custom import Custom
 
 import json
 
@@ -22,7 +20,7 @@ nodes = data['nodes']
 
 # Generate diagram based on node map
 with Diagram(data['systemName'] + '-' + data['systemVersion']):
-    # Format node with type
+    # Format node icon with type
     def formatNode(node):
         if (node['nodeType'] == 'pipeline'): return DataPipeline(node['nodeName'])
         elif (node['nodeType'] == 'database'): return GenericDatabase(node['nodeName'])
@@ -36,18 +34,20 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         elif (node['nodeType'] == 'customer'): return ProfessionalServices(node['nodeName'])
         elif (node['nodeType'] == 'archive'): return S3GlacierArchive(node['nodeName'])
         elif (node['nodeType'] == 'srcSink'): return User(node['nodeName'])
-        elif (node['nodeType'] == 'layer'): return Custom(node['nodeName'], "./custom_white_box.png")
 
         return EC2(node['nodeName'])
 
-    def formatEdge(node, l):
+    def formatEdge(node, l, ndx):
         color = 'black'
+        lbl = ''
 
-        if (node['nodeType'] == 'API'):
-            color = 'green'
+        if 'previousSteps' in node and ndx < len(node['previousSteps']):
+            lbl = node['previousSteps'][i]
+
+        #if node['nodeType'] == 'API':
+        #    color = 'green'
         
-        return Edge(minlen=l, color=color)
-
+        return Edge(xlabel=lbl, minlen=l, color=color, fontsize="24")
 
     # Fill node map with node ID as key, node name as value
     nodeMap = {}
@@ -60,12 +60,11 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         depLen = len(node['dependencies'])
         depList = []
         
-        for i in range(depLen):
-            depID = node['dependencies'][i]
+        if depLen > 0:
+            for i in range(depLen):
+                depID = node['dependencies'][i]
 
-            depList.append(nodeMap[depID])
-        if len(depList) > 0:
-            depList >> formatEdge(node, "2") >> nodeMap[node['nodeID']]
+                nodeMap[depID] >> formatEdge(node, "2", i) >> nodeMap[node['nodeID']]
         else:
             nodeMap[node['nodeID']]
 
