@@ -44,8 +44,13 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         if 'previousSteps' in node and ndx < len(node['previousSteps']):
             lbl = node['previousSteps'][i]
 
-        #if node['nodeType'] == 'API':
-        #    color = 'green'
+        if 'requests' in node and ndx < len(node['requests']):
+            requestType = node['requests'][ndx]
+
+            if requestType == 'GET':
+                color = 'green'
+            elif requestType == 'POST' or requestType == 'PUT' or requestType == 'DELETE':
+                color = 'red'
         
         return Edge(xlabel=lbl, minlen=l, color=color, fontsize="24")
 

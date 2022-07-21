@@ -31,7 +31,8 @@
       "nodeType": "pipeline",
       "nodeID": 4,
       "dependencies": [3, 7],
-      "previousSteps": ["#1", "#2"]
+      "previousSteps": ["#1", "#2"],
+      "requests": ["POST"]
     },
     {
       "nodeName": "ccx-data-pipeline",
@@ -85,7 +86,8 @@
       "nodeType": "proxy",
       "nodeID": 12,
       "dependencies": [11, 13, 14, 15, 17],
-      "previousSteps": ["#7", "#8"]
+      "previousSteps": ["#7", "#8"],
+      "requests": ["", "", "", "GET", "POST"]
     },
     {
       "nodeName": "ccx-Insights-content-service",
@@ -103,7 +105,8 @@
       "nodeName": "API-v1",
       "nodeType": "API",
       "nodeID": 15,
-      "dependencies": [12, 16]
+      "dependencies": [12, 16],
+      "requests": ["GET", "GET"]
     },
     {
       "nodeName": "REST-API-consumers",
@@ -116,13 +119,15 @@
         "recieves response for cluster",
         "sends REST API request (+JWT token)"
       ],
-      "dependencies": [15]
+      "dependencies": [15],
+      "requests": ["GET"]
     },
     {
       "nodeName": "API-v2",
       "nodeType": "API",
       "nodeID": 17,
-      "dependencies": [12, 18]
+      "dependencies": [12, 18],
+      "requests": ["POST", "POST"]
     },
     {
       "nodeName": "Insights-Advisor",
@@ -132,7 +137,8 @@
         "recieves response",
         "sends REST API request (+JWT token)"
       ],
-      "dependencies": [17]
+      "dependencies": [17],
+      "requests": ["POST"]
     },
     {
       "nodeName": "notification-writer",
@@ -183,21 +189,24 @@
       "nodeType": "kafka",
       "nodeID": 25,
       "dependencies": [4],
-      "previousSteps": ["#17"]
+      "previousSteps": ["#17"],
+      "requests": ["POST"]
     },
     {
       "nodeName": "archive-db-writer",
       "nodeType": "writer",
       "nodeID": 26,
       "dependencies": [25],
-      "previousSteps": ["#18"]
+      "previousSteps": ["#18"],
+      "requests": ["POST"]
     },
     {
       "nodeName": "CVEs-database",
       "nodeType": "database",
       "nodeID": 27,
       "dependencies": [26],
-      "previousSteps": ["#19"]
+      "previousSteps": ["#19"],
+      "requests": ["POST"]
     }
   ]
 }
