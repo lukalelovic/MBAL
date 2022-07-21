@@ -13,7 +13,7 @@ from diagrams.aws.management import Config, ManagedServices as MS
 import json
 
 # Open JSON file
-f = open('../Extensions/exFullSystem.json')
+f = open('../example.json')
 data = json.load(f)
 
 nodes = data['nodes']
