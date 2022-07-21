@@ -38,6 +38,22 @@
                   ]
                 }
               ]
+            },
+            "previousSteps": {
+                "type": "array",
+                "items": [
+                    {
+                        "type": "string"
+                    }
+                ]
+            },
+            "requests": {
+                "type": "array",
+                "items": [
+                    {
+                        "type": "string"
+                    }
+                ]
             }
           },
           "required": [
