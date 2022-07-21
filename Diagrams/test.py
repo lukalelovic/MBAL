@@ -1,5 +1,6 @@
 from modulefinder import EXTENDED_ARG
-from diagrams import Diagram, Edge
+from turtle import color
+from diagrams import Diagram, Edge, Cluster
 from diagrams.aws.compute import EC2
 from diagrams.aws.storage import SimpleStorageServiceS3Bucket
 from diagrams.aws.analytics import DataPipeline
@@ -9,11 +10,12 @@ from diagrams.aws.analytics import ManagedStreamingForKafka
 from diagrams.aws.enablement import ManagedServices, ProfessionalServices
 from diagrams.aws.storage import S3GlacierArchive
 from diagrams.aws.management import Config, ManagedServices as MS
+from diagrams.generic.blank import Blank
 
 import json
 
 # Open JSON file
-f = open('../example.json')
+f = open('../Extensions/exClusterSystem.json')
 data = json.load(f)
 
 nodes = data['nodes']
@@ -22,18 +24,19 @@ nodes = data['nodes']
 with Diagram(data['systemName'] + '-' + data['systemVersion']):
     # Format node icon with type
     def formatNode(node):
-        if (node['nodeType'] == 'pipeline'): return DataPipeline(node['nodeName'])
-        elif (node['nodeType'] == 'database'): return GenericDatabase(node['nodeName'])
-        elif (node['nodeType'] == 'proxy'): return APIGateway(node['nodeName'])
-        elif (node['nodeType'] == 'service'): return ManagedServices(node['nodeName'])
-        elif (node['nodeType'] == 'bucket'): return SimpleStorageServiceS3Bucket(node['nodeName'])
-        elif (node['nodeType'] == 'kafka'): return ManagedStreamingForKafka(node['nodeName'], color = "black")
-        elif (node['nodeType'] == 'config'): return Config(node['nodeName'])
-        elif (node['nodeType'] == 'API'): return APIGatewayEndpoint(node['nodeName'])
-        elif (node['nodeType'] == 'writer'): return MS(node['nodeName'])
-        elif (node['nodeType'] == 'customer'): return ProfessionalServices(node['nodeName'])
-        elif (node['nodeType'] == 'archive'): return S3GlacierArchive(node['nodeName'])
-        elif (node['nodeType'] == 'srcSink'): return User(node['nodeName'])
+        if node['nodeType'] == 'pipeline': return DataPipeline(node['nodeName'])
+        elif node['nodeType'] == 'database': return GenericDatabase(node['nodeName'])
+        elif node['nodeType'] == 'proxy': return APIGateway(node['nodeName'])
+        elif node['nodeType'] == 'service': return ManagedServices(node['nodeName'])
+        elif node['nodeType'] == 'bucket': return SimpleStorageServiceS3Bucket(node['nodeName'])
+        elif node['nodeType'] == 'kafka': return ManagedStreamingForKafka(node['nodeName'], color = "black")
+        elif node['nodeType'] == 'config': return Config(node['nodeName'])
+        elif node['nodeType'] == 'API': return APIGatewayEndpoint(node['nodeName'])
+        elif node['nodeType'] == 'writer': return MS(node['nodeName'])
+        elif node['nodeType'] == 'customer': return ProfessionalServices(node['nodeName'])
+        elif node['nodeType'] == 'archive': return S3GlacierArchive(node['nodeName'])
+        elif node['nodeType'] == 'srcSink': return User(node['nodeName'])
+        elif node['nodeType'] == 'cluster': return Blank(node['nodeName'])
 
         return EC2(node['nodeName'])
 
@@ -64,11 +67,17 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         # Get node dependencies
         depLen = len(node['dependencies'])
         depList = []
-        
-        if depLen > 0:
+        nodeType = node['nodeType']
+
+        # Display nodes in cluster
+        if node['nodeType'] == 'cluster':
+            with Cluster(node['nodeName']):
+                for i in range(len(node['clusters'])):
+                    nodeMap[node['clusters'][i]]
+        elif depLen > 0:
             for i in range(depLen):
                 depID = node['dependencies'][i]
-
+                
                 nodeMap[depID] >> formatEdge(node, "2", i) >> nodeMap[node['nodeID']]
         else:
             nodeMap[node['nodeID']]
