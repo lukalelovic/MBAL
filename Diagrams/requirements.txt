@@ -1,6 +1,9 @@
+attrs==21.4.0 
 diagrams==0.21.1
 graphviz==0.19.2
 Jinja2==3.1.2
+jsonschema==4.7.2  
 MarkupSafe==2.1.1
 pip==22.1.2
+pyrsistent==0.18.1
 setuptools==56.0.0

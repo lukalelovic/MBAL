@@ -13,10 +13,20 @@ from diagrams.aws.management import Config, ManagedServices as MS
 from diagrams.generic.blank import Blank
 
 import json
+from jsonschema import validate
 
-# Open JSON file
-f = open('../Extensions/exClusterSystem.json')
-data = json.load(f)
+# Open JSON example file
+example = open('../Extensions/exClusterSystem.json')
+data = json.load(example)
+example.close()
+
+# Open JSON schema file
+schema_file = open('../schema.json')
+schema = json.load(open('../schema.json'))
+schema_file.close()
+
+# Validate the example follows the schema (or throw exception)
+validate(instance=data, schema=schema)
 
 nodes = data['nodes']
 
@@ -81,5 +91,3 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
                 nodeMap[depID] >> formatEdge(node, "2", i) >> nodeMap[node['nodeID']]
         else:
             nodeMap[node['nodeID']]
-
-f.close()
