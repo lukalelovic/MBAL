@@ -39,7 +39,8 @@
       "nodeType": "pipeline",
       "nodeID": 5,
       "dependencies": [3],
-      "previousSteps": ["#1"]
+      "previousSteps": ["#1"],
+      "requests": ["PIPE"]
     },
     {
       "nodeName": "Insights-storage-broker",

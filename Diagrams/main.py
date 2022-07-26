@@ -1,5 +1,4 @@
 from modulefinder import EXTENDED_ARG
-from turtle import color
 from diagrams import Diagram, Edge, Cluster
 from diagrams.aws.compute import EC2
 from diagrams.aws.storage import SimpleStorageServiceS3Bucket
@@ -16,7 +15,7 @@ import json
 from jsonschema import validate
 
 # Open JSON example file
-example = open('../Extensions/exClusterSystem.json')
+example = open('../example.json')
 data = json.load(example)
 example.close()
 
@@ -47,6 +46,10 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         elif node['nodeType'] == 'archive': return S3GlacierArchive(node['nodeName'])
         elif node['nodeType'] == 'srcSink': return User(node['nodeName'])
         elif node['nodeType'] == 'cluster': return Blank(node['nodeName'])
+        
+        # Create clusters
+        with Cluster("Source/Sink Cluster"):
+            ss_primary - ["Customer-cluster"]
 
         return EC2(node['nodeName'])
 
@@ -64,6 +67,8 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
                 color = 'green'
             elif requestType == 'POST' or requestType == 'PUT' or requestType == 'DELETE':
                 color = 'red'
+            elif requestType == "PIPE":
+                color = 'blue'
         
         return Edge(xlabel=lbl, minlen=l, color=color, fontsize="24")
 
@@ -91,3 +96,4 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
                 nodeMap[depID] >> formatEdge(node, "2", i) >> nodeMap[node['nodeID']]
         else:
             nodeMap[node['nodeID']]
+    
