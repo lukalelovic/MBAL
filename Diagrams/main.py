@@ -15,13 +15,13 @@ import json
 from jsonschema import validate
 
 # Open JSON example file
-example = open('../example.json')
+example = open('../Examples/example-redhat.json')
 data = json.load(example)
 example.close()
 
 # Open JSON schema file
 schema_file = open('../schema.json')
-schema = json.load(open('../schema.json'))
+schema = json.load(schema_file)
 schema_file.close()
 
 # Validate the example follows the schema (or throw exception)
