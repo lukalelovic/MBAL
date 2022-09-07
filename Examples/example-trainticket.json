@@ -12,7 +12,7 @@
             "nodeName": "ts-user-service",
             "nodeType": "service",
             "nodeID": 1,
-            "dependencies": []
+            "dependencies": [0,8]
         },
         {
             "nodeName": "ts-basic-service",
@@ -24,31 +24,31 @@
             "nodeName": "ts-ticketinfo-service",
             "nodeType": "service",
             "nodeID": 3,
-            "dependencies": []
+            "dependencies": [14,37]
         },
         {
             "nodeName": "ts-price-service",
             "nodeType": "service",
             "nodeID": 4,
-            "dependencies": []
+            "dependencies": [2,20]
         },
         {
             "nodeName": "ts-train-service",
             "nodeType": "service",
             "nodeID": 5,
-            "dependencies": []
+            "dependencies": [2,14,20,37]
         },
         {
             "nodeName": "ts-station-service",
             "nodeType": "service",
             "nodeID": 6,
-            "dependencies": []
+            "dependencies": [2,20]
         },
         {
             "nodeName": "ts-route-service",
             "nodeType": "service",
             "nodeID": 7,
-            "dependencies": []
+            "dependencies": [2,14,37]
         },
         {
             "nodeName": "ts-cancel-service",
@@ -60,31 +60,31 @@
             "nodeName": "ts-order-service",
             "nodeType": "service",
             "nodeID": 9,
-            "dependencies": []
+            "dependencies": [8,26,37]
         },
         {
             "nodeName": "ts-order-other-service",
             "nodeType": "service",
             "nodeID": 10,
-            "dependencies": []
+            "dependencies": [8,14]
         },
         {
             "nodeName": "ts-notification-service",
             "nodeType": "service",
             "nodeID": 12,
-            "dependencies": []
+            "dependencies": [8]
         },
         {
             "nodeName": "ts-inside-payment-service",
             "nodeType": "service",
             "nodeID": 13,
-            "dependencies": []
+            "dependencies": [8]
         },
         {
             "nodeName": "ts-travel2-service",
             "nodeType": "service",
             "nodeID": 14,
-            "dependencies": []
+            "dependencies": [13]
         },
         {
             "nodeName": "ts-perserve-other-service",
@@ -114,7 +114,7 @@
             "nodeName": "ts-seat-service",
             "nodeType": "service",
             "nodeID": 19,
-            "dependencies": []
+            "dependencies": [14,37]
         },
         {
             "nodeName": "ts-admin-basic-info-service",
@@ -180,13 +180,13 @@
             "nodeName": "ts-config-service",
             "nodeType": "service",
             "nodeID": 30,
-            "dependencies": []
+            "dependencies": [20]
         },
         {
             "nodeName": "ts-contacts-service",
             "nodeType": "service",
             "nodeID": 31,
-            "dependencies": []
+            "dependencies": [20]
         },
         {
             "nodeName": "ts-payment-service",
@@ -207,10 +207,10 @@
             "dependencies": []
         },
         {
-            "nodeName": "ts-verficiation-code-service",
+            "nodeName": "ts-verificiation-code-service",
             "nodeType": "service",
             "nodeID": 35,
-            "dependencies": []
+            "dependencies": [24]
         },
         {
             "nodeName": "ts-consign-price-service",
