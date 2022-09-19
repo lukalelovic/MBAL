@@ -15,7 +15,7 @@ import json
 from jsonschema import validate
 
 # Open JSON example file
-example = open('../Examples/example-redhat.json')
+example = open('../Examples/example-trainticket.json')
 data = json.load(example)
 example.close()
 
