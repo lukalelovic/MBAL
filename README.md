@@ -1,4 +1,4 @@
-# ArchitectureLanguagePOC
+# MBAL: Microservices-Based Architectural Language
 
 JSON-based domain-specific language for describing MSA-based systems
 
