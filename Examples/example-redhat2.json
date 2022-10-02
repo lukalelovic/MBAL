@@ -85,6 +85,194 @@
                     ]
                 }
             ]
+        },
+        {
+            "nodeName": "ccx-data-pipeline",
+            "nodeType": "pipeline",
+            "dependencies": [
+                {
+                    "nodeName": "Kafka-topic-platform.upload.buckit",
+                    "requests": [
+                        {
+                            "requestType": "PUT",
+                            "executionStep": "#1"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "Kafka-topic-ccx.ocp.results",
+                    "requests": [
+                        {
+                            "executionStep": "#11"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Insights-storage-broker",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "Kafka-topic-platform.upload.buckit"
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "S3-bucket"
+                }
+            ]
+        },
+        {
+            "nodeName": "S3-bucket",
+            "nodeType": "bucket",
+            "dependencies": [
+                {
+                    "nodeName": "Insights-storage-broker"
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "SHA-extractor",
+                    "requests": [
+                        {
+                            "executionStep": "#2"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Kafka-topic-archive-results",
+            "nodeType": "kafka",
+            "dependencies": [
+                {
+                    "nodeName": "SHA-extractor",
+                    "requests": [
+                        {
+                            "requestType": "POST",
+                            "executionStep": "#17"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "archive-db-writer",
+                    "nodeType": "writer",
+                    "requests": [
+                        {
+                            "requestType":  "POST",
+                            "executionStep": "#18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "CVEs Database",
+            "nodeType": "database",
+            "dependencies": [
+                {
+                    "nodeName": "archive-db-writer",
+                    "requests": [
+                        {
+                            "requestType": "POST",
+                            "executionStep": "#19"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Kafka-topic-ccx.ocp.results",
+            "nodeType": "kafka",
+            "dependencies": [
+                {
+                    "nodeName": "ccx-data-pipeline",
+                    "requests": [
+                        {
+                            "executionStep": "#3"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "Insights-results-db-writer",
+                    "requests": [
+                        {
+                            "executionStep": "#4"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "notification-writer",
+                    "requests": [
+                        {
+                            "executionStep": "#11"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Insights-results-db-writer",
+            "nodeType": "writer",
+            "dependencies": [
+                {
+                    "nodeName": "Kafka-topic-ccx.ocp.results",
+                    "requests": [
+                        {
+                            "executionStep": "#4"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "AWS-RDS-DB",
+                    "requests": [
+                        {
+                            "executionStep": "#5"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "AWS-RDS-DB",
+            "nodeType": "database",
+            "dependencies": [
+                {
+                    "nodeName": "Insights-results-db-writer",
+                    "requests": [
+                        {
+                            "executionStep": "#5"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "Insights-results-aggregator",
+                    "requests": [
+                        {
+                            "executionStep": "#10"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "Insights-results-aggregator",
+                    "requests": [
+                        {
+                            "executionStep": "#6"
+                        }
+                    ]
+                }
+            ]
         }
     ]
 }

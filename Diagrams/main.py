@@ -15,7 +15,7 @@ import json
 from jsonschema import validate
 
 # Open JSON example file
-example = open('../Examples/example-trainticket.json')
+example = open('../Examples/example-redhat2.json')
 data = json.load(example)
 example.close()
 
@@ -53,29 +53,30 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
 
         return EC2(node['nodeName'])
 
-    def formatEdge(node, l, ndx):
+    def formatEdge(dependency):
         color = 'black'
         lbl = ''
 
-        if 'previousSteps' in node and ndx < len(node['previousSteps']):
-            lbl = node['previousSteps'][i]
+        if 'requests' in dependency:
+            # Get only the first request step and color
+            mainRequest = dependency['requests'][0]
+            lbl = mainRequest['executionStep']
 
-        if 'requests' in node and ndx < len(node['requests']):
-            requestType = node['requests'][ndx]
+            reqType = mainRequest['requestType']
 
-            if requestType == 'GET':
+            if reqType == 'GET':
                 color = 'green'
-            elif requestType == 'POST' or requestType == 'PUT' or requestType == 'DELETE':
+            elif reqType == 'POST' or reqType == 'DELETE':
                 color = 'red'
-            elif requestType == "PIPE":
+            elif reqType == 'PUT':
                 color = 'blue'
         
-        return Edge(xlabel=lbl, minlen=l, color=color, fontsize="24")
+        return Edge(xlabel=lbl, minlen="2", color=color, fontsize="24")
 
     # Fill node map with node ID as key, node name as value
     nodeMap = {}
     for node in nodes:
-        nodeMap.update({ node['nodeID']: formatNode(node) })
+        nodeMap.update({ node['nodeName']: formatNode(node) })
 
     # Iterate through all nodes
     for node in nodes:
@@ -84,16 +85,12 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         depList = []
         nodeType = node['nodeType']
 
-        # Display nodes in cluster
-        if node['nodeType'] == 'cluster':
-            with Cluster(node['nodeName']):
-                for i in range(len(node['clusters'])):
-                    nodeMap[node['clusters'][i]]
-        elif depLen > 0:
+        if depLen > 0:
             for i in range(depLen):
-                depID = node['dependencies'][i]
+                dep = node['dependencies'][i]
+                depName = dep['nodeName']
                 
-                nodeMap[depID] >> formatEdge(node, "2", i) >> nodeMap[node['nodeID']]
+                nodeMap[depName] >> formatEdge(dep) >> nodeMap[node['nodeName']]
         else:
-            nodeMap[node['nodeID']]
+            nodeMap[node['nodeName']]
     
