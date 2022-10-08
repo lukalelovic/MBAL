@@ -1,0 +1,2955 @@
+{
+    "systemName": "train-ticket-system",
+    "systemVersion": "0.2",
+    "nodes": [
+        {
+            "nodeName": "ts-admin-user-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-user-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody UserDto user, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.updateUser"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getAllUser"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.deleteUserById"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-user-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-admin-user-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody UserDto user, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.updateUser"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getAllUser"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.deleteUserById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-cancel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getUserByUserId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getUserByUserId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getUserByUserId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-auth-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody AuthDto authDto",
+                            "returnData": "HttpEntity<Response>",
+                            "endpointName": "auth.controller.AuthController.createDefaultUser"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-basic-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-ticketinfo-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.BasicController.queryForTravel"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.BasicController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-price-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @PathVariable String trainType, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.query"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-train-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-ticketinfo-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String name, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String name, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String name, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-basic-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.BasicController.queryForTravel"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.BasicController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-price-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-basic-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @PathVariable String trainType, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.query"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-admin-basic-info-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "price.controller.PriceController.create"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.update"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.queryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.delete"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-train-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-basic-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-admin-basic-info-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.create"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.update"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.query"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.delete"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-station-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-basic-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-admin-basic-info-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Station station, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "fdse.microservice.controller.StationController.create"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Station station, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.update"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.query"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@RequestBody Station station, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "fdse.microservice.controller.StationController.delete"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForNameBatch"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForNameBatch"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-food-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-rebook-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationIdForName#quot;) String stationId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForNameBatch"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-route-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-basic-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-admin-route-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody RouteInfo createAndModifyRouteInfo, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "route.controller.RouteController.createAndModifyRoute"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.deleteRoute"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String startId, @PathVariable String terminalId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryByStartAndTerminal"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-cancel-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.saveOrderInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.saveOrderInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-notification-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "notification.controller.NotificationController.order_cancel_success"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-inside-payment-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @PathVariable String money, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "inside_payment.controller.InsidePaymentController.drawBack"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-user-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getUserByUserId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-order-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-cancel-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.saveOrderInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date travelDate, @PathVariable String trainNumber, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.calculateSoldTicket"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-security-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.securityInfoCheck"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-execute-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.modifyOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order createOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.createNewOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-admin-order-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.addcreateNewOrder"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.updateOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.findAllOrder"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.deleteOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-inside-payment-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.modifyOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.getTicketListByDateAndTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForNameBatch"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-order-other-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-cancel-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.saveOrderInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date travelDate, @PathVariable String trainNumber, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.calculateSoldTicket"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-security-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.securityInfoCheck"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-execute-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.modifyOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order createOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.createNewOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-admin-order-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.addcreateNewOrder"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.updateOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.findAllOrder"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.deleteOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-inside-payment-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.modifyOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.getTicketListByDateAndTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForNameBatch"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-notification-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-cancel-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "notification.controller.NotificationController.order_cancel_success"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "notification.controller.NotificationController.preserve_success"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "notification.controller.NotificationController.preserve_success"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-inside-payment-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-cancel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @PathVariable String money, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "inside_payment.controller.InsidePaymentController.drawBack"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-rebook-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody PaymentInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "inside_payment.controller.InsidePaymentController.payDifference"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @PathVariable String money, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "inside_payment.controller.InsidePaymentController.drawBack"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-payment-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Payment info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "com.trainticket.controller.PaymentController.pay"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.modifyOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.modifyOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-travel2-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getTripAllDetailInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-admin-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.updateTrip"
+                        },
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "travel2.controller.Travel2Controller.createTrip"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.adminQueryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.deleteTrip"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.queryInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getTripsByRouteId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.queryInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getRouteByTripId"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getTrainTypeByTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-ticketinfo-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String name, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.getLeftTicketOfInterval"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-train-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date travelDate, @PathVariable String trainNumber, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.calculateSoldTicket"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-preserve-other-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getTripAllDetailInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-ticketinfo-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-food-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "foodsearch.controller.FoodController.createFoodOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.create"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-consign-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Consign request, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "consign.controller.ConsignController.insertConsign"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-notification-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "notification.controller.NotificationController.preserve_success"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order createOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.createNewOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-assurance-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "assurance.controller.AssuranceController.createNewAssurance"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-contacts-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.getContactsByContactsId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-security-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "security.controller.SecurityController.check"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-user-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getUserByUserId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-admin-travel-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.updateTrip"
+                        },
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "travel2.controller.Travel2Controller.createTrip"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.adminQueryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.deleteTrip"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.updateTrip"
+                        },
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "travel.controller.TravelController.createTrip"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.adminQueryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.deleteTrip"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-route-plan-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-travel-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "plan.controller.RoutePlanController.getCheapestRoutes"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "plan.controller.RoutePlanController.getMinStopStations"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "plan.controller.RoutePlanController.getQuickestRoutes"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.queryInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getTripsByRouteId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.queryInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getTripsByRouteId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String startId, @PathVariable String terminalId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryByStartAndTerminal"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-travel-plan-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.queryInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.queryInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.getLeftTicketOfInterval"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForNameBatch"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "plan.controller.RoutePlanController.getCheapestRoutes"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "plan.controller.RoutePlanController.getMinStopStations"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "plan.controller.RoutePlanController.getQuickestRoutes"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-ticketinfo-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String name, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-seat-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.getLeftTicketOfInterval"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.getLeftTicketOfInterval"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.create"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.create"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-rebook-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.create"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.getLeftTicketOfInterval"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.getTicketListByDateAndTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.getTicketListByDateAndTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-config-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String configName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel2-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getRouteByTripId"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel2.controller.Travel2Controller.getTrainTypeByTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getRouteByTripId"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getTrainTypeByTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-admin-basic-info-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-config-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Config info, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "config.controller.ConfigController.createConfig"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Config info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.updateConfig"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.queryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String configName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.deleteConfig"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-price-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "price.controller.PriceController.create"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.update"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.queryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "price.controller.PriceController.delete"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-train-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.create"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.update"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.query"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.delete"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-contacts-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Contacts aci, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "contacts.controller.ContactsController.createNewContactsAdmin"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Contacts info, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.modifyContacts"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.getAllContacts"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String contactsId, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.deleteContacts"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Station station, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "fdse.microservice.controller.StationController.create"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Station station, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.update"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.query"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@RequestBody Station station, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "fdse.microservice.controller.StationController.delete"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-preserve-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-ticketinfo-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getTripAllDetailInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.create"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-food-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "foodsearch.controller.FoodController.createFoodOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order createOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.createNewOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-consign-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Consign request, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "consign.controller.ConsignController.insertConsign"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-notification-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "notification.controller.NotificationController.preserve_success"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-assurance-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "assurance.controller.AssuranceController.createNewAssurance"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-contacts-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.getContactsByContactsId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-security-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "security.controller.SecurityController.check"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-user-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "user.controller.UserController.getUserByUserId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-food-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "foodsearch.controller.FoodController.createFoodOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "foodsearch.controller.FoodController.createFoodOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-food-map-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody List<String> stationIdList",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "food.controller.FoodStoreController.getFoodStoresByStationIds"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "food.controller.TrainFoodController.getTrainFoodOfTrip"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getRouteByTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationNameForId#quot;) String stationName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-assurance-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "assurance.controller.AssuranceController.createNewAssurance"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "assurance.controller.AssuranceController.createNewAssurance"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-auth-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-user-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody AuthDto authDto",
+                            "returnData": "HttpEntity<Response>",
+                            "endpointName": "auth.controller.AuthController.createDefaultUser"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-verification-code-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String verifyCode, HttpServletRequest request, HttpServletResponse response, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "verifycode.controller.VerifyCodeController.verifyCode"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-food-map-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-food-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody List<String> stationIdList",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "food.controller.FoodStoreController.getFoodStoresByStationIds"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "food.controller.TrainFoodController.getTrainFoodOfTrip"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-security-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "security.controller.SecurityController.check"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "security.controller.SecurityController.check"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.securityInfoCheck"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.securityInfoCheck"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-execute-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.modifyOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.modifyOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String orderId, @PathVariable int status, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.getOrderById"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-admin-route-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-route-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody RouteInfo createAndModifyRouteInfo, @RequestHeader HttpHeaders headers",
+                            "returnData": "ResponseEntity<Response>",
+                            "endpointName": "route.controller.RouteController.createAndModifyRoute"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.deleteRoute"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-consign-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Consign request, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "consign.controller.ConsignController.insertConsign"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Consign request, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "consign.controller.ConsignController.insertConsign"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-consign-price-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String weight, @PathVariable String isWithinRegion, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "consignprice.controller.ConsignPriceController.getPriceByWeightAndRegion"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-config-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-admin-basic-info-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Config info, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "config.controller.ConfigController.createConfig"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Config info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.updateConfig"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.queryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String configName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.deleteConfig"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String configName, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "config.controller.ConfigController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-contacts-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-admin-basic-info-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Contacts aci, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "contacts.controller.ContactsController.createNewContactsAdmin"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Contacts info, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.modifyContacts"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.getAllContacts"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String contactsId, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.deleteContacts"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-other-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.getContactsByContactsId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity",
+                            "endpointName": "contacts.controller.ContactsController.getContactsByContactsId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-payment-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-inside-payment-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Payment info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "com.trainticket.controller.PaymentController.pay"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-rebook-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-inside-payment-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody PaymentInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "inside_payment.controller.InsidePaymentController.payDifference"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String userId, @PathVariable String money, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "inside_payment.controller.InsidePaymentController.drawBack"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.create"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-station-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable(value = #quot;stationIdForName#quot;) String stationId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "fdse.microservice.controller.StationController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-admin-order-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.addcreateNewOrder"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.updateOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.findAllOrder"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.deleteOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-other-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.addcreateNewOrder"
+                        },
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody Order order, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.updateOrder"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.findAllOrder"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String orderId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "other.controller.OrderOtherController.deleteOrder"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        },
+        {
+            "nodeName": "ts-verification-code-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-auth-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String verifyCode, HttpServletRequest request, HttpServletResponse response, @RequestHeader HttpHeaders headers",
+                            "returnData": "boolean",
+                            "endpointName": "verifycode.controller.VerifyCodeController.verifyCode"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-consign-price-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-consign-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String weight, @PathVariable String isWithinRegion, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "consignprice.controller.ConsignPriceController.getPriceByWeightAndRegion"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": []
+        },
+        {
+            "nodeName": "ts-travel-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "ts-admin-travel-service",
+                    "requests": [
+                        {
+                            "functionType": "PUT",
+                            "arguments": "@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.updateTrip"
+                        },
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "HttpEntity<?>",
+                            "endpointName": "travel.controller.TravelController.createTrip"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.adminQueryAll"
+                        },
+                        {
+                            "functionType": "DELETE",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.deleteTrip"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.queryInfo"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getTripsByRouteId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-preserve-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getTripAllDetailInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-food-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getRouteByTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-travel-plan-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody TripInfo info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.queryInfo"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getRouteByTripId"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String tripId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "travel.controller.TravelController.getTrainTypeByTripId"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ts-ticketinfo-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Travel info, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForTravel"
+                        },
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String name, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "ticketinfo.controller.TicketInfoController.queryForStationId"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-seat-service",
+                    "requests": [
+                        {
+                            "functionType": "POST",
+                            "arguments": "@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "seat.controller.SeatController.getLeftTicketOfInterval"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-train-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String id, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "train.controller.TrainController.retrieve"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-route-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable String routeId, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "route.controller.RouteController.queryById"
+                        }
+                    ],
+                    "strength": 0.1
+                },
+                {
+                    "nodeName": "ts-order-service",
+                    "requests": [
+                        {
+                            "functionType": "GET",
+                            "arguments": "@PathVariable Date travelDate, @PathVariable String trainNumber, @RequestHeader HttpHeaders headers",
+                            "returnData": "org.springframework.http.HttpEntity",
+                            "endpointName": "order.controller.OrderController.calculateSoldTicket"
+                        }
+                    ],
+                    "strength": 0.1
+                }
+            ]
+        }
+    ]
+}

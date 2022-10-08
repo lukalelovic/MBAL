@@ -15,7 +15,7 @@ import json
 from jsonschema import validate
 
 # Open JSON example file
-example = open('../Examples/example-redhat2.json')
+example = open('../Examples/' + input())
 data = json.load(example)
 example.close()
 
@@ -60,9 +60,13 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         if 'requests' in dependency:
             # Get only the first request step and color
             mainRequest = dependency['requests'][0]
-            lbl = mainRequest['executionStep']
 
-            reqType = mainRequest['requestType']
+            if 'executionStep' in mainRequest:
+                lbl = mainRequest['executionStep']
+
+            reqType = 'none'
+            if 'requestType' in mainRequest:
+                reqType = mainRequest['requestType']
 
             if reqType == 'GET':
                 color = 'green'

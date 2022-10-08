@@ -75,7 +75,10 @@
     {"id":  "ts-travel-service", "group":  5}
   ],
   "links": [
-    {"source": "ts-admin-user-service",  "strength": 0.1, "target": "ts-user-service",
+    {
+      "source": "ts-admin-user-service",  
+      "strength": 0.1, 
+      "target": "ts-user-service",
       "functions": [
         { "functionType": "PUT",
           "arguments": "@RequestBody UserDto user, @RequestHeader HttpHeaders headers",

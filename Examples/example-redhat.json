@@ -45,7 +45,7 @@
             "nodeType": "kafka",
             "dependencies": [
                 {
-                    "nodeName": "Insights-Archive"
+                    "nodeName": "Ingress-Service"
                 }
             ],
             "targets": [
@@ -70,6 +70,14 @@
                         {
                             "requestType": "POST",
                             "executionStep": "#1"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "S3-bucket",
+                    "requests": [
+                        {
+                            "executionStep": "#2"
                         }
                     ]
                 }
@@ -166,6 +174,32 @@
                         {
                             "requestType":  "POST",
                             "executionStep": "#18"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "archive-db-writer",
+            "nodeType": "writer",
+            "dependencies": [
+                {
+                    "nodeName": "Kafka-topic-archive-results",
+                    "requests": [
+                        {
+                            "requestType": "POST",
+                            "executionStep": "#18"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "CVEs Database",
+                    "requests": [
+                        {
+                            "requestType": "POST",
+                            "executionStep": "#19"
                         }
                     ]
                 }
@@ -272,6 +306,71 @@
                         }
                     ]
                 }
+            ]
+        },
+        {
+            "nodeName": "Insights-results-aggregator",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "AWS-RDS-DB",
+                    "requests": [
+                        {
+                            "executionStep": "#6"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "executionStep": "#9"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "AWS-RDS-DB",
+                    "requests": [
+                        {
+                            "executionStep": "#10"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "executionStep": "#7"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "ccx-smart-proxy",
+            "nodeType": "proxy",
+            "dependencies": [
+                {
+                    "nodeName": "Insights-results-aggregator",
+                    "requests": [
+                        {
+                            "executionStep": "#7"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "API-v1",
+                    "requests": [
+                        {
+                            "requestType": "GET"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                
             ]
         }
     ]
