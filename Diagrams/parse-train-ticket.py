@@ -10,29 +10,27 @@ nodes = []
 nodeMap = {}
 
 # Load the node service names into a map
-for node in train_ticket_data['nodes']:
-    nodeMap.update({ node['id']: {
-        "nodeName": node['id'],
+for node in train_ticket_data['communication']['nodes']:
+    nodeMap.update({ node['label']: {
+        "nodeName": node['label'],
         "nodeType": "service",
+        "nodeShape": node['shape'],
         "dependencies": [],
         "targets": []
     } })
 
 # Populate the node map with the node's data
-for link in train_ticket_data['links']:
+for edge in train_ticket_data['communication']['edges']:
     # Update source targets
-    sourceName = link['source']
-    targetName = link['target']
-
-    requests = []
-    for function in link['functions']:
-        requests.append(function)
+    sourceName = edge['from']['label']
+    targetName = edge['to']['label']
 
     def depOrTargetObj(nodeName):
         return {
             "nodeName": nodeName, 
-            "requests": link['functions'],
-            "strength": link['strength']
+            "requests": [edge['label']],
+            "length": edge['length'],
+            "width": edge['width']
         }
     
     # Append dependencies and targets

@@ -14,8 +14,12 @@ from diagrams.generic.blank import Blank
 import json
 from jsonschema import validate
 
+print('Enter MBAL file:')
+jsonFile = input()
+print()
+
 # Open JSON example file
-example = open('../Examples/' + input())
+example = open('../Examples/' + jsonFile)
 data = json.load(example)
 example.close()
 
@@ -57,7 +61,7 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         color = 'black'
         lbl = ''
 
-        if 'requests' in dependency:
+        if 'requests' in dependency and 'requestType' in dependency['requests'][0]:
             # Get only the first request step and color
             mainRequest = dependency['requests'][0]
 
