@@ -1,0 +1,20 @@
+{
+    "type": "object",
+    "properties": {
+      "protocol": {
+        "type": "string"
+      },
+      "types": {
+        "type": "array",
+        "items": {}
+      },
+      "messages": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "protocol",
+      "types",
+      "messages"
+    ]
+}

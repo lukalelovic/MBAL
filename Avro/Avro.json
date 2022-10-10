@@ -1,0 +1,37 @@
+{
+"protocol" : "ts-preserve-other-service",
+    "types" : ["service"],
+    "messages" : {
+        "from": [],
+        "to": [
+            {
+                "nodeName": "ts-food-service",
+                "requests": [
+                    {
+                        "type": "POST",
+                        "argument": "[@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders headers]",
+                        "msReturn": "org.springframework.http.HttpEntity",
+                        "endpointFunction": "foodsearch.controller.FoodController.createFoodOrder",
+                        "path": "/FoodController/createFoodOrder"
+                    }
+                ],
+                "length": 200,
+                "width": 1
+            },
+            {
+                "nodeName": "ts-seat-service",
+                "requests": [
+                    {
+                        "type": "POST",
+                        "argument": "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]",
+                        "msReturn": "org.springframework.http.HttpEntity",
+                        "endpointFunction": "seat.controller.SeatController.create",
+                        "path": "/SeatController/create"
+                    }
+                ],
+                "length": 200,
+                "width": 1
+            }
+        ]
+    }
+}
