@@ -361,17 +361,291 @@
                     ]
                 },
                 {
-                    "nodeName": "API-v1",
+                    "nodeName": "Insights-Advisor",
                     "requests": [
                         {
-                            "requestType": "GET"
+                            "requestType": "POST",
+                            "apiEndpoint": "API v2",
+                            "requestDesc": "REST API request (+JWT token)"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "REST API consumers", 
+                    "requests": [
+                        {
+                            "requestType": "GET",
+                            "apiEndpoint": "API v1",
+                            "requestDesc": "REST API request (+JWT token) response for cluster"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "ccx-insights-content-service",
+                    "requests": [
+                        {
+                            "executionStep": "#8"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "AMS",
+                    "requests": [
+                        {
+                            "requestType": "PUT"
                         }
                     ]
                 }
             ],
             "targets": [
-                
+                {
+                    "nodeName": "Insights-results-aggregator",
+                    "requests": [
+                        {
+                            "executionStep": "#9"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "Insights-Advisor",
+                    "requests": [
+                        {
+                            "requestType": "POST",
+                            "apiEndpoint": "API v2",
+                            "requestDesc": "REST API request (+JWT token)"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "REST API consumers", 
+                    "requests": [
+                        {
+                            "requestType": "GET",
+                            "apiEndpoint": "API v1",
+                            "requestDesc": "REST API request (+JWT token) response for cluster"
+                        }
+                    ]
+                }
             ]
+        },
+        {
+            "nodeName": "AMS",
+            "nodeType": "proxy",
+            "dependencies": [
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "requestType": "PUT"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Insights-Advisor",
+            "nodeType": "customer",
+            "dependencies": [
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "requestType": "POST",
+                            "apiEndpoint": "API v2",
+                            "requestDesc": "REST API request (+JWT token)"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "requestType": "POST",
+                            "apiEndpoint": "API v2",
+                            "requestDesc": "REST API request (+JWT token)"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "REST API consumers",
+            "nodeType": "customer",
+            "dependencies": [
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "requestType": "GET",
+                            "apiEndpoint": "API v1",
+                            "requestDesc": "REST API request (+JWT token) response for cluster"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "requestType": "GET",
+                            "apiEndpoint": "API v1",
+                            "requestDesc": "REST API request (+JWT token) response for cluster"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "ccx-insights-content-service",
+            "nodeType": "service",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ccx-smart-proxy",
+                    "requests": [
+                        {
+                            "executionStep": "#8"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "notification-writer",
+            "nodeType": "writer",
+            "dependencies": [
+                {
+                    "nodeName": "Kafka-topic-ccx.ocp.results",
+                    "requests": [
+                        {
+                            "executionStep": "#11"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "Notification-DB",
+                    "requests": [
+                        {
+                            "executionStep": "#12"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Notification-DB",
+            "nodeType": "database",
+            "dependencies": [
+                {
+                    "nodeName": "notification-writer",
+                    "requests": [
+                        {
+                            "executionStep": "#12"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "ccx-notification-service",
+                    "requests": [
+                        {
+                            "executionStep": "#13"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Notification-rules",
+            "nodeType": "config",
+            "dependencies": [],
+            "targets": [
+                {
+                    "nodeName": "ccx-notification-service",
+                    "requests": [
+                        {
+                            "executionStep": "#14"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "ccx-notification-service",
+            "nodeType": "service",
+            "dependencies": [
+                {
+                    "nodeName": "Notification-DB",
+                    "requests": [
+                        {
+                            "executionStep": "#13"
+                        }
+                    ]
+                },
+                {
+                    "nodeName": "Notification-rules",
+                    "requests": [
+                        {
+                            "executionStep": "#14"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "Kafka-topic-platform.notifications.ingress",
+                    "requests": [
+                        {
+                            "executionStep": "#15"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Kafka-topic-platform.notifications.ingress",
+            "nodeType": "kafka",
+            "dependencies": [
+                {
+                    "nodeName": "ccx-notification-service",
+                    "requests": [
+                        {
+                            "executionStep": "#15"
+                        }
+                    ]
+                }
+            ],
+            "targets": [
+                {
+                    "nodeName": "Customer",
+                    "requests": [
+                        {
+                            "executionStep": "#16"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "nodeName": "Customer",
+            "nodeType": "customer",
+            "dependencies": [
+                {
+                    "nodeName": "Kafka-topic-platform.notifications.ingress",
+                    "requests": [
+                        {
+                            "executionStep": "#16"
+                        }
+                    ]
+                }
+            ],
+            "targets": []
         }
     ]
 }

@@ -61,7 +61,7 @@ with Diagram(data['systemName'] + '-' + data['systemVersion']):
         color = 'black'
         lbl = ''
 
-        if 'requests' in dependency and 'requestType' in dependency['requests'][0]:
+        if 'requests' in dependency:
             # Get only the first request step and color
             mainRequest = dependency['requests'][0]
 
