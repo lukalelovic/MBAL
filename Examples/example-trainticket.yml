@@ -1,0 +1,2684 @@
+---
+systemName: train-ticket-system
+systemVersion: '0.2'
+nodes:
+- nodeName: ts-preserve-other-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-food-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: foodsearch.controller.FoodController.createFoodOrder
+      path: "/FoodController/createFoodOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.create
+      path: "/SeatController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-notification-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: notification.controller.NotificationController.preserve_success
+      path: "/NotificationController/preserve_success"
+    length: 200
+    width: 1
+  - nodeName: ts-assurance-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: assurance.controller.AssuranceController.createNewAssurance
+      path: "/AssuranceController/createNewAssurance"
+    length: 200
+    width: 1
+  - nodeName: ts-user-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getUserByUserId
+      path: "/UserController/getUserByUserId"
+    length: 200
+    width: 1
+  - nodeName: ts-consign-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Consign request, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: consign.controller.ConsignController.insertConsign
+      path: "/ConsignController/insertConsign"
+    length: 200
+    width: 1
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+  - nodeName: ts-contacts-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.getContactsByContactsId
+      path: "/ContactsController/getContactsByContactsId"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getTripAllDetailInfo
+      path: "/Travel2Controller/getTripAllDetailInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-security-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String accountId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: security.controller.SecurityController.check
+      path: "/SecurityController/check"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order createOrder, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.createNewOrder
+      path: "/OrderOtherController/createNewOrder"
+    length: 200
+    width: 1
+- nodeName: ts-order-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-execute-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.getOrderById
+      path: "/OrderController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-cancel-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.saveOrderInfo
+      path: "/OrderController/saveOrderInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.getTicketListByDateAndTripId
+      path: "/OrderController/getTicketListByDateAndTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-inside-payment-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.modifyOrder
+      path: "/OrderController/modifyOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-cancel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.getOrderById
+      path: "/OrderController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.updateOrder
+      path: "/OrderController/updateOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-security-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.securityInfoCheck
+      path: "/OrderController/securityInfoCheck"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.addcreateNewOrder
+      path: "/OrderController/addcreateNewOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date travelDate, @PathVariable String trainNumber,
+        @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.calculateSoldTicket
+      path: "/OrderController/calculateSoldTicket"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order createOrder, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.createNewOrder
+      path: "/OrderController/createNewOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-execute-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.modifyOrder
+      path: "/OrderController/modifyOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.deleteOrder
+      path: "/OrderController/deleteOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.findAllOrder
+      path: "/OrderController/findAllOrder"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-station-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForNameBatch
+      path: "/StationController/queryForNameBatch"
+    length: 200
+    width: 1
+- nodeName: ts-config-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-seat-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String configName, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.retrieve
+      path: "/ConfigController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.queryAll
+      path: "/ConfigController/queryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Config info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.updateConfig
+      path: "/ConfigController/updateConfig"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String configName, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.deleteConfig
+      path: "/ConfigController/deleteConfig"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Config info, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: config.controller.ConfigController.createConfig
+      path: "/ConfigController/createConfig"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-order-other-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.updateOrder
+      path: "/OrderOtherController/updateOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-security-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.securityInfoCheck
+      path: "/OrderOtherController/securityInfoCheck"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.getTicketListByDateAndTripId
+      path: "/OrderOtherController/getTicketListByDateAndTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-execute-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.getOrderById
+      path: "/OrderOtherController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.addcreateNewOrder
+      path: "/OrderOtherController/addcreateNewOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-cancel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.getOrderById
+      path: "/OrderOtherController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.findAllOrder
+      path: "/OrderOtherController/findAllOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-inside-payment-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.modifyOrder
+      path: "/OrderOtherController/modifyOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-cancel-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.saveOrderInfo
+      path: "/OrderOtherController/saveOrderInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date travelDate, @PathVariable String trainNumber,
+        @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.calculateSoldTicket
+      path: "/OrderOtherController/calculateSoldTicket"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-order-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.deleteOrder
+      path: "/OrderOtherController/deleteOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order createOrder, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.createNewOrder
+      path: "/OrderOtherController/createNewOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-execute-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.modifyOrder
+      path: "/OrderOtherController/modifyOrder"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-station-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForNameBatch
+      path: "/StationController/queryForNameBatch"
+    length: 200
+    width: 1
+- nodeName: ts-travel-plan-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-station-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForNameBatch
+      path: "/StationController/queryForNameBatch"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.queryInfo
+      path: "/TravelController/queryInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.getLeftTicketOfInterval
+      path: "/SeatController/getLeftTicketOfInterval"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: plan.controller.RoutePlanController.getQuickestRoutes
+      path: "/RoutePlanController/getQuickestRoutes"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: plan.controller.RoutePlanController.getCheapestRoutes
+      path: "/RoutePlanController/getCheapestRoutes"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: plan.controller.RoutePlanController.getMinStopStations
+      path: "/RoutePlanController/getMinStopStations"
+    length: 200
+    width: 1
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String name, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForStationId
+      path: "/TicketInfoController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.queryInfo
+      path: "/Travel2Controller/queryInfo"
+    length: 200
+    width: 1
+- nodeName: ts-consign-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Consign request, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: consign.controller.ConsignController.insertConsign
+      path: "/ConsignController/insertConsign"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Consign request, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: consign.controller.ConsignController.insertConsign
+      path: "/ConsignController/insertConsign"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-consign-price-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String weight, @PathVariable String isWithinRegion,
+        @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: consignprice.controller.ConsignPriceController.getPriceByWeightAndRegion
+      path: "/ConsignPriceController/getPriceByWeightAndRegion"
+    length: 200
+    width: 1
+- nodeName: ts-admin-route-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-route-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryAll
+      path: "/RouteController/queryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-route-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RouteInfo createAndModifyRouteInfo, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: route.controller.RouteController.createAndModifyRoute
+      path: "/RouteController/createAndModifyRoute"
+    length: 200
+    width: 1
+  - nodeName: ts-route-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.deleteRoute
+      path: "/RouteController/deleteRoute"
+    length: 200
+    width: 1
+- nodeName: ts-payment-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-inside-payment-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Payment info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: com.trainticket.controller.PaymentController.pay
+      path: "/PaymentController/pay"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-notification-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: notification.controller.NotificationController.preserve_success
+      path: "/NotificationController/preserve_success"
+    length: 200
+    width: 1
+  - nodeName: ts-cancel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: notification.controller.NotificationController.order_cancel_success
+      path: "/NotificationController/order_cancel_success"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: notification.controller.NotificationController.preserve_success
+      path: "/NotificationController/preserve_success"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-admin-order-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-order-other-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.updateOrder
+      path: "/OrderOtherController/updateOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.addcreateNewOrder
+      path: "/OrderOtherController/addcreateNewOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.findAllOrder
+      path: "/OrderOtherController/findAllOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.updateOrder
+      path: "/OrderController/updateOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order order, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.addcreateNewOrder
+      path: "/OrderController/addcreateNewOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.deleteOrder
+      path: "/OrderOtherController/deleteOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.deleteOrder
+      path: "/OrderController/deleteOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.findAllOrder
+      path: "/OrderController/findAllOrder"
+    length: 200
+    width: 1
+- nodeName: ts-cancel-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-order-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.getOrderById
+      path: "/OrderOtherController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.saveOrderInfo
+      path: "/OrderController/saveOrderInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-inside-payment-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @PathVariable String money, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: inside_payment.controller.InsidePaymentController.drawBack
+      path: "/InsidePaymentController/drawBack"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.getOrderById
+      path: "/OrderController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Order orderInfo, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.saveOrderInfo
+      path: "/OrderOtherController/saveOrderInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-user-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getUserByUserId
+      path: "/UserController/getUserByUserId"
+    length: 200
+    width: 1
+  - nodeName: ts-notification-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: notification.controller.NotificationController.order_cancel_success
+      path: "/NotificationController/order_cancel_success"
+    length: 200
+    width: 1
+- nodeName: ts-route-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-route-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryAll
+      path: "/RouteController/queryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-route-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RouteInfo createAndModifyRouteInfo, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: route.controller.RouteController.createAndModifyRoute
+      path: "/RouteController/createAndModifyRoute"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String startId, @PathVariable String terminalId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryByStartAndTerminal
+      path: "/RouteController/queryByStartAndTerminal"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-route-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.deleteRoute
+      path: "/RouteController/deleteRoute"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-basic-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-execute-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-order-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.getOrderById
+      path: "/OrderOtherController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.getOrderById
+      path: "/OrderController/getOrderById"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.modifyOrder
+      path: "/OrderController/modifyOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.modifyOrder
+      path: "/OrderOtherController/modifyOrder"
+    length: 200
+    width: 1
+- nodeName: ts-inside-payment-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-cancel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @PathVariable String money, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: inside_payment.controller.InsidePaymentController.drawBack
+      path: "/InsidePaymentController/drawBack"
+    length: 200
+    width: 1
+  - nodeName: ts-rebook-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody PaymentInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: inside_payment.controller.InsidePaymentController.payDifference
+      path: "/InsidePaymentController/payDifference"
+    length: 200
+    width: 1
+  - nodeName: ts-rebook-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @PathVariable String money, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: inside_payment.controller.InsidePaymentController.drawBack
+      path: "/InsidePaymentController/drawBack"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-payment-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Payment info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: com.trainticket.controller.PaymentController.pay
+      path: "/PaymentController/pay"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.modifyOrder
+      path: "/OrderOtherController/modifyOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String orderId, @PathVariable int status, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.modifyOrder
+      path: "/OrderController/modifyOrder"
+    length: 200
+    width: 1
+- nodeName: ts-preserve-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-assurance-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: assurance.controller.AssuranceController.createNewAssurance
+      path: "/AssuranceController/createNewAssurance"
+    length: 200
+    width: 1
+  - nodeName: ts-food-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: foodsearch.controller.FoodController.createFoodOrder
+      path: "/FoodController/createFoodOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.create
+      path: "/SeatController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-security-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String accountId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: security.controller.SecurityController.check
+      path: "/SecurityController/check"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-contacts-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.getContactsByContactsId
+      path: "/ContactsController/getContactsByContactsId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getTripAllDetailInfo
+      path: "/TravelController/getTripAllDetailInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-user-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getUserByUserId
+      path: "/UserController/getUserByUserId"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Order createOrder, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.createNewOrder
+      path: "/OrderController/createNewOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-consign-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Consign request, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: consign.controller.ConsignController.insertConsign
+      path: "/ConsignController/insertConsign"
+    length: 200
+    width: 1
+  - nodeName: ts-notification-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody NotifyInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: notification.controller.NotificationController.preserve_success
+      path: "/NotificationController/preserve_success"
+    length: 200
+    width: 1
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+- nodeName: ts-station-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.query
+      path: "/StationController/query"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForNameBatch
+      path: "/StationController/queryForNameBatch"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForNameBatch
+      path: "/StationController/queryForNameBatch"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Station station, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: fdse.microservice.controller.StationController.create
+      path: "/StationController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-rebook-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationIdForName") String stationId, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryById
+      path: "/StationController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForNameBatch
+      path: "/StationController/queryForNameBatch"
+    length: 200
+    width: 1
+  - nodeName: ts-basic-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-food-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: DELETE
+      argument: "[@RequestBody Station station, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: fdse.microservice.controller.StationController.delete
+      path: "/StationController/delete"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Station station, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.update
+      path: "/StationController/update"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-seat-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-preserve-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.create
+      path: "/SeatController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.create
+      path: "/SeatController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.getLeftTicketOfInterval
+      path: "/SeatController/getLeftTicketOfInterval"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.getLeftTicketOfInterval
+      path: "/SeatController/getLeftTicketOfInterval"
+    length: 200
+    width: 1
+  - nodeName: ts-rebook-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.create
+      path: "/SeatController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.getLeftTicketOfInterval
+      path: "/SeatController/getLeftTicketOfInterval"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-config-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String configName, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.retrieve
+      path: "/ConfigController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getRouteByTripId
+      path: "/TravelController/getRouteByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getRouteByTripId
+      path: "/Travel2Controller/getRouteByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.getTicketListByDateAndTripId
+      path: "/OrderOtherController/getTicketListByDateAndTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getTrainTypeByTripId
+      path: "/Travel2Controller/getTrainTypeByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.getTicketListByDateAndTripId
+      path: "/OrderController/getTicketListByDateAndTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getTrainTypeByTripId
+      path: "/TravelController/getTrainTypeByTripId"
+    length: 200
+    width: 1
+- nodeName: ts-price-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.queryAll
+      path: "/PriceController/queryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-basic-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @PathVariable String trainType, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.query
+      path: "/PriceController/query"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.update
+      path: "/PriceController/update"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: DELETE
+      argument: "[@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.delete
+      path: "/PriceController/delete"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: price.controller.PriceController.create
+      path: "/PriceController/create"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-food-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-preserve-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: foodsearch.controller.FoodController.createFoodOrder
+      path: "/FoodController/createFoodOrder"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody FoodOrder addFoodOrder, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: foodsearch.controller.FoodController.createFoodOrder
+      path: "/FoodController/createFoodOrder"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-food-map-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: food.controller.TrainFoodController.getTrainFoodOfTrip
+      path: "/TrainFoodController/getTrainFoodOfTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-food-map-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: food.controller.FoodStoreController.getFoodStoresByStationIds
+      path: "/FoodStoreController/getFoodStoresByStationIds"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getRouteByTripId
+      path: "/TravelController/getRouteByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+- nodeName: ts-auth-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-user-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody AuthDto authDto]"
+      msReturn: HttpEntity<Response>
+      endpointFunction: auth.controller.AuthController.createDefaultUser
+      path: "/AuthController/createDefaultUser"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-verification-code-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String verifyCode, HttpServletRequest request, HttpServletResponse
+        response, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: verifycode.controller.VerifyCodeController.verifyCode
+      path: "/VerifyCodeController/verifyCode"
+    length: 200
+    width: 1
+- nodeName: ts-contacts-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String contactsId, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.deleteContacts
+      path: "/ContactsController/deleteContacts"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Contacts aci, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: contacts.controller.ContactsController.createNewContactsAdmin
+      path: "/ContactsController/createNewContactsAdmin"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Contacts info, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.modifyContacts
+      path: "/ContactsController/modifyContacts"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.getContactsByContactsId
+      path: "/ContactsController/getContactsByContactsId"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.getContactsByContactsId
+      path: "/ContactsController/getContactsByContactsId"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.getAllContacts
+      path: "/ContactsController/getAllContacts"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-train-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.create
+      path: "/TrainController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-basic-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.retrieve
+      path: "/TrainController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.retrieve
+      path: "/TrainController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.retrieve
+      path: "/TrainController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.update
+      path: "/TrainController/update"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.query
+      path: "/TrainController/query"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-basic-info-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.delete
+      path: "/TrainController/delete"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-food-map-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-food-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: food.controller.TrainFoodController.getTrainFoodOfTrip
+      path: "/TrainFoodController/getTrainFoodOfTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-food-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody List<String> stationIdList]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: food.controller.FoodStoreController.getFoodStoresByStationIds
+      path: "/FoodStoreController/getFoodStoresByStationIds"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-travel-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.queryInfo
+      path: "/TravelController/queryInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getRouteByTripId
+      path: "/TravelController/getRouteByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getTripsByRouteId
+      path: "/TravelController/getTripsByRouteId"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.adminQueryAll
+      path: "/TravelController/adminQueryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.queryInfo
+      path: "/TravelController/queryInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.updateTrip
+      path: "/TravelController/updateTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-food-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getRouteByTripId
+      path: "/TravelController/getRouteByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: travel.controller.TravelController.createTrip
+      path: "/TravelController/createTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getTripAllDetailInfo
+      path: "/TravelController/getTripAllDetailInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getTrainTypeByTripId
+      path: "/TravelController/getTrainTypeByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.deleteTrip
+      path: "/TravelController/deleteTrip"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String name, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForStationId
+      path: "/TicketInfoController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-route-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-train-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.retrieve
+      path: "/TrainController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.getLeftTicketOfInterval
+      path: "/SeatController/getLeftTicketOfInterval"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date travelDate, @PathVariable String trainNumber,
+        @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.calculateSoldTicket
+      path: "/OrderController/calculateSoldTicket"
+    length: 200
+    width: 1
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+- nodeName: ts-travel2-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-seat-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getRouteByTripId
+      path: "/Travel2Controller/getRouteByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getTrainTypeByTripId
+      path: "/Travel2Controller/getTrainTypeByTripId"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getTripsByRouteId
+      path: "/Travel2Controller/getTripsByRouteId"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.updateTrip
+      path: "/Travel2Controller/updateTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.adminQueryAll
+      path: "/Travel2Controller/adminQueryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripAllDetailInfo gtdi, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getTripAllDetailInfo
+      path: "/Travel2Controller/getTripAllDetailInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.deleteTrip
+      path: "/Travel2Controller/deleteTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.queryInfo
+      path: "/Travel2Controller/queryInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: travel2.controller.Travel2Controller.createTrip
+      path: "/Travel2Controller/createTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-route-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.queryInfo
+      path: "/Travel2Controller/queryInfo"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-train-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.retrieve
+      path: "/TrainController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String name, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForStationId
+      path: "/TicketInfoController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-route-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-order-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date travelDate, @PathVariable String trainNumber,
+        @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.calculateSoldTicket
+      path: "/OrderOtherController/calculateSoldTicket"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.getLeftTicketOfInterval
+      path: "/SeatController/getLeftTicketOfInterval"
+    length: 200
+    width: 1
+- nodeName: ts-admin-basic-info-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-station-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.query
+      path: "/StationController/query"
+    length: 200
+    width: 1
+  - nodeName: ts-contacts-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String contactsId, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.deleteContacts
+      path: "/ContactsController/deleteContacts"
+    length: 200
+    width: 1
+  - nodeName: ts-train-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.create
+      path: "/TrainController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-config-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.queryAll
+      path: "/ConfigController/queryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-contacts-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Contacts aci, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: contacts.controller.ContactsController.createNewContactsAdmin
+      path: "/ContactsController/createNewContactsAdmin"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Station station, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: fdse.microservice.controller.StationController.create
+      path: "/StationController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-price-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.queryAll
+      path: "/PriceController/queryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-price-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.update
+      path: "/PriceController/update"
+    length: 200
+    width: 1
+  - nodeName: ts-config-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Config info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.updateConfig
+      path: "/ConfigController/updateConfig"
+    length: 200
+    width: 1
+  - nodeName: ts-config-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String configName, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: config.controller.ConfigController.deleteConfig
+      path: "/ConfigController/deleteConfig"
+    length: 200
+    width: 1
+  - nodeName: ts-train-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody TrainType trainType, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.update
+      path: "/TrainController/update"
+    length: 200
+    width: 1
+  - nodeName: ts-config-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Config info, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: config.controller.ConfigController.createConfig
+      path: "/ConfigController/createConfig"
+    length: 200
+    width: 1
+  - nodeName: ts-contacts-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Contacts info, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.modifyContacts
+      path: "/ContactsController/modifyContacts"
+    length: 200
+    width: 1
+  - nodeName: ts-contacts-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity
+      endpointFunction: contacts.controller.ContactsController.getAllContacts
+      path: "/ContactsController/getAllContacts"
+    length: 200
+    width: 1
+  - nodeName: ts-train-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.query
+      path: "/TrainController/query"
+    length: 200
+    width: 1
+  - nodeName: ts-train-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.delete
+      path: "/TrainController/delete"
+    length: 200
+    width: 1
+  - nodeName: ts-price-service
+    requests:
+    - type: DELETE
+      argument: "[@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.delete
+      path: "/PriceController/delete"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: DELETE
+      argument: "[@RequestBody Station station, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: fdse.microservice.controller.StationController.delete
+      path: "/StationController/delete"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody Station station, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.update
+      path: "/StationController/update"
+    length: 200
+    width: 1
+  - nodeName: ts-price-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody PriceConfig info, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: price.controller.PriceController.create
+      path: "/PriceController/create"
+    length: 200
+    width: 1
+- nodeName: ts-rebook-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-station-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationIdForName") String stationId, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryById
+      path: "/StationController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-inside-payment-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody PaymentInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: inside_payment.controller.InsidePaymentController.payDifference
+      path: "/InsidePaymentController/payDifference"
+    length: 200
+    width: 1
+  - nodeName: ts-seat-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Seat seatRequest, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: seat.controller.SeatController.create
+      path: "/SeatController/create"
+    length: 200
+    width: 1
+  - nodeName: ts-inside-payment-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @PathVariable String money, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: inside_payment.controller.InsidePaymentController.drawBack
+      path: "/InsidePaymentController/drawBack"
+    length: 200
+    width: 1
+- nodeName: ts-user-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-admin-user-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.deleteUserById
+      path: "/UserController/deleteUserById"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-user-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody UserDto user, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.updateUser
+      path: "/UserController/updateUser"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getUserByUserId
+      path: "/UserController/getUserByUserId"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getUserByUserId
+      path: "/UserController/getUserByUserId"
+    length: 200
+    width: 1
+  - nodeName: ts-admin-user-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getAllUser
+      path: "/UserController/getAllUser"
+    length: 200
+    width: 1
+  - nodeName: ts-cancel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getUserByUserId
+      path: "/UserController/getUserByUserId"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-auth-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody AuthDto authDto]"
+      msReturn: HttpEntity<Response>
+      endpointFunction: auth.controller.AuthController.createDefaultUser
+      path: "/AuthController/createDefaultUser"
+    length: 200
+    width: 1
+- nodeName: ts-basic-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String stationName, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.BasicController.queryForStationId
+      path: "/BasicController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-ticketinfo-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.BasicController.queryForTravel
+      path: "/BasicController/queryForTravel"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-train-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String id, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: train.controller.TrainController.retrieve
+      path: "/TrainController/retrieve"
+    length: 200
+    width: 1
+  - nodeName: ts-price-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @PathVariable String trainType, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: price.controller.PriceController.query
+      path: "/PriceController/query"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-route-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+- nodeName: ts-admin-travel-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.adminQueryAll
+      path: "/TravelController/adminQueryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.updateTrip
+      path: "/TravelController/updateTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody TravelInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.updateTrip
+      path: "/Travel2Controller/updateTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.adminQueryAll
+      path: "/Travel2Controller/adminQueryAll"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: travel.controller.TravelController.createTrip
+      path: "/TravelController/createTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.deleteTrip
+      path: "/Travel2Controller/deleteTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TravelInfo routeIds, @RequestHeader HttpHeaders headers]"
+      msReturn: HttpEntity<?>
+      endpointFunction: travel2.controller.Travel2Controller.createTrip
+      path: "/Travel2Controller/createTrip"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String tripId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.deleteTrip
+      path: "/TravelController/deleteTrip"
+    length: 200
+    width: 1
+- nodeName: ts-verification-code-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-auth-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String verifyCode, HttpServletRequest request, HttpServletResponse
+        response, @RequestHeader HttpHeaders headers]"
+      msReturn: boolean
+      endpointFunction: verifycode.controller.VerifyCodeController.verifyCode
+      path: "/VerifyCodeController/verifyCode"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-security-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-preserve-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String accountId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: security.controller.SecurityController.check
+      path: "/SecurityController/check"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String accountId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: security.controller.SecurityController.check
+      path: "/SecurityController/check"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-order-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: other.controller.OrderOtherController.securityInfoCheck
+      path: "/OrderOtherController/securityInfoCheck"
+    length: 200
+    width: 1
+  - nodeName: ts-order-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable Date checkDate, @PathVariable String accountId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: order.controller.OrderController.securityInfoCheck
+      path: "/OrderController/securityInfoCheck"
+    length: 200
+    width: 1
+- nodeName: ts-assurance-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-preserve-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: assurance.controller.AssuranceController.createNewAssurance
+      path: "/AssuranceController/createNewAssurance"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable int typeIndex, @PathVariable String orderId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: assurance.controller.AssuranceController.createNewAssurance
+      path: "/AssuranceController/createNewAssurance"
+    length: 200
+    width: 1
+  targets: []
+- nodeName: ts-admin-user-service
+  nodeType: service
+  nodeShape: box
+  dependencies: []
+  targets:
+  - nodeName: ts-user-service
+    requests:
+    - type: DELETE
+      argument: "[@PathVariable String userId, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.deleteUserById
+      path: "/UserController/deleteUserById"
+    length: 200
+    width: 1
+  - nodeName: ts-user-service
+    requests:
+    - type: PUT
+      argument: "[@RequestBody UserDto user, @RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.updateUser
+      path: "/UserController/updateUser"
+    length: 200
+    width: 1
+  - nodeName: ts-user-service
+    requests:
+    - type: GET
+      argument: "[@RequestHeader HttpHeaders headers]"
+      msReturn: ResponseEntity<Response>
+      endpointFunction: user.controller.UserController.getAllUser
+      path: "/UserController/getAllUser"
+    length: 200
+    width: 1
+- nodeName: ts-ticketinfo-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-travel-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String name, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForStationId
+      path: "/TicketInfoController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String name, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForStationId
+      path: "/TicketInfoController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-other-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String name, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForStationId
+      path: "/TicketInfoController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-preserve-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: ticketinfo.controller.TicketInfoController.queryForTravel
+      path: "/TicketInfoController/queryForTravel"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-basic-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String stationName, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.BasicController.queryForStationId
+      path: "/BasicController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-basic-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody Travel info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.BasicController.queryForTravel
+      path: "/BasicController/queryForTravel"
+    length: 200
+    width: 1
+- nodeName: ts-route-plan-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: plan.controller.RoutePlanController.getQuickestRoutes
+      path: "/RoutePlanController/getQuickestRoutes"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: plan.controller.RoutePlanController.getCheapestRoutes
+      path: "/RoutePlanController/getCheapestRoutes"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-plan-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody RoutePlanInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: plan.controller.RoutePlanController.getMinStopStations
+      path: "/RoutePlanController/getMinStopStations"
+    length: 200
+    width: 1
+  targets:
+  - nodeName: ts-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.queryInfo
+      path: "/TravelController/queryInfo"
+    length: 200
+    width: 1
+  - nodeName: ts-travel-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel.controller.TravelController.getTripsByRouteId
+      path: "/TravelController/getTripsByRouteId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody ArrayList<String> routeIds, @RequestHeader HttpHeaders
+        headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.getTripsByRouteId
+      path: "/Travel2Controller/getTripsByRouteId"
+    length: 200
+    width: 1
+  - nodeName: ts-route-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String routeId, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryById
+      path: "/RouteController/queryById"
+    length: 200
+    width: 1
+  - nodeName: ts-route-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String startId, @PathVariable String terminalId, @RequestHeader
+        HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: route.controller.RouteController.queryByStartAndTerminal
+      path: "/RouteController/queryByStartAndTerminal"
+    length: 200
+    width: 1
+  - nodeName: ts-station-service
+    requests:
+    - type: GET
+      argument: '[@PathVariable(value = "stationNameForId") String stationName, @RequestHeader
+        HttpHeaders headers]'
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: fdse.microservice.controller.StationController.queryForStationId
+      path: "/StationController/queryForStationId"
+    length: 200
+    width: 1
+  - nodeName: ts-travel2-service
+    requests:
+    - type: POST
+      argument: "[@RequestBody TripInfo info, @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: travel2.controller.Travel2Controller.queryInfo
+      path: "/Travel2Controller/queryInfo"
+    length: 200
+    width: 1
+- nodeName: ts-consign-price-service
+  nodeType: service
+  nodeShape: box
+  dependencies:
+  - nodeName: ts-consign-service
+    requests:
+    - type: GET
+      argument: "[@PathVariable String weight, @PathVariable String isWithinRegion,
+        @RequestHeader HttpHeaders headers]"
+      msReturn: org.springframework.http.HttpEntity
+      endpointFunction: consignprice.controller.ConsignPriceController.getPriceByWeightAndRegion
+      path: "/ConsignPriceController/getPriceByWeightAndRegion"
+    length: 200
+    width: 1
+  targets: []
+...

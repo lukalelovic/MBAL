@@ -11,16 +11,17 @@ from diagrams.aws.storage import S3GlacierArchive
 from diagrams.aws.management import Config, ManagedServices as MS
 from diagrams.generic.blank import Blank
 
+import yaml
 import json
 from jsonschema import validate
 
 print('Enter MBAL file:')
-jsonFile = input()
+fileName = input()
 print()
 
-# Open JSON example file
-example = open('../Examples/' + jsonFile)
-data = json.load(example)
+# Open YAML or JSON MBAL file
+example = open('../Examples/' + fileName)
+data = yaml.safe_load(example)
 example.close()
 
 # Open JSON schema file
