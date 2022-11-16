@@ -1,6 +1,6 @@
 # MBAL: Microservices-Based Architectural Language
 
-JSON-based domain-specific language for describing MSA-based systems
+YAML-based description language for describing MSA-based systems
 
 Currently coupled with the diagrams Python library for generating a graphical model from the language
 
