@@ -1,0 +1,29 @@
+tosca_definitions_version: tosca_simple_yaml_1_0
+
+metadata:
+  template_name: tosca.redhat.pipeline
+  template_version: 1.0.0-SNAPSHOT
+
+description: A sample description of the Red Hat pipeline.
+
+node_types:
+  customer:
+    requirements:
+    - connection:
+        relationship: Connection
+  archive:
+    requirements:
+    - connection:
+        relationship: Connection
+
+topology_template:
+  node_templates:
+    Customer-Cluster:
+      type: customer
+      requirements:
+      - connection:
+          node: Insights-Archive
+          relationship:
+            type: tosca.relationships.ConnectsTo
+    Insights-Archive:
+      type: archive
