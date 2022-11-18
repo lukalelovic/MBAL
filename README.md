@@ -1,4 +1,4 @@
-# MBAL: Microservices-Based Architectural Language
+# Microservice Architectural Language for the Service View perspective (MALSEV)
 
 YAML-based description language for describing MSA-based systems
 
