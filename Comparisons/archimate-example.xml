@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model xmlns="http://www.opengroup.org/xsd/archimate/3.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengroup.org/xsd/archimate/3.0/ http://www.opengroup.org/xsd/archimate/3.1/archimate3_Diagram.xsd" identifier="id-0655255d94b140a0a1d1fe902b01bbfb">
+  <name xml:lang="en">Red Hat</name>
+  <elements>
+    <element identifier="id-0cb0d133900a40f6ae016df0115a9d76" xsi:type="Representation">
+      <name xml:lang="en">Customer Cluster</name>
+    </element>
+    <element identifier="id-9469a76523de414bad3f9f86c7ce8ba3" xsi:type="BusinessObject">
+      <name xml:lang="en">Ingress Service</name>
+    </element>
+    <element identifier="id-e291c73013a54ee9b435c6e8d8465d47" xsi:type="Product">
+      <name xml:lang="en">3Scale</name>
+    </element>
+  </elements>
+  <relationships>
+    <relationship identifier="id-fcddfe6a79574176be5b7b414d78b492" source="id-0cb0d133900a40f6ae016df0115a9d76" target="id-9469a76523de414bad3f9f86c7ce8ba3" xsi:type="Association" isDirected="true">
+      <name xml:lang="en">insights archive</name>
+    </relationship>
+    <relationship identifier="id-576f7d391d474191a050e075399b6e6d" source="id-e291c73013a54ee9b435c6e8d8465d47" target="id-9469a76523de414bad3f9f86c7ce8ba3" xsi:type="Composition" />
+  </relationships>
+  <organizations>
+    <item>
+      <label xml:lang="en">Business</label>
+      <item identifierRef="id-0cb0d133900a40f6ae016df0115a9d76" />
+      <item identifierRef="id-9469a76523de414bad3f9f86c7ce8ba3" />
+      <item identifierRef="id-e291c73013a54ee9b435c6e8d8465d47" />
+    </item>
+    <item>
+      <label xml:lang="en">Relations</label>
+      <item identifierRef="id-fcddfe6a79574176be5b7b414d78b492" />
+      <item identifierRef="id-576f7d391d474191a050e075399b6e6d" />
+    </item>
+    <item>
+      <label xml:lang="en">Views</label>
+      <item identifierRef="id-0e8b7dfc026e4bb597e09802f2bd0900" />
+    </item>
+  </organizations>
+  <views>
+    <diagrams>
+      <view identifier="id-0e8b7dfc026e4bb597e09802f2bd0900" xsi:type="Diagram">
+        <name xml:lang="en">Default View</name>
+        <node identifier="id-c8b67783de2c4445b2b8283379c2ccc5" elementRef="id-0cb0d133900a40f6ae016df0115a9d76" xsi:type="Element" x="336" y="240" w="120" h="55">
+          <style>
+            <fillColor r="255" g="255" b="181" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </node>
+        <node identifier="id-6a22323588bc4062ac2d42afda2a7c2a" elementRef="id-e291c73013a54ee9b435c6e8d8465d47" xsi:type="Element" x="612" y="96" w="529" h="385">
+          <style>
+            <fillColor r="255" g="255" b="181" a="100" />
+            <lineColor r="92" g="92" b="92" a="100" />
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+          <node identifier="id-61e83beb6f594247bdfca6a9f8574db6" elementRef="id-9469a76523de414bad3f9f86c7ce8ba3" xsi:type="Element" x="648" y="240" w="120" h="55">
+            <style>
+              <fillColor r="255" g="255" b="181" a="100" />
+              <lineColor r="92" g="92" b="92" a="100" />
+              <font name="Segoe UI" size="9">
+                <color r="0" g="0" b="0" />
+              </font>
+            </style>
+          </node>
+        </node>
+        <connection identifier="id-3356f4186eb94c03a023f6fb87684054" relationshipRef="id-fcddfe6a79574176be5b7b414d78b492" xsi:type="Relationship" source="id-c8b67783de2c4445b2b8283379c2ccc5" target="id-61e83beb6f594247bdfca6a9f8574db6">
+          <style>
+            <lineColor r="0" g="0" b="0" />
+            <font name="Segoe UI" size="9">
+              <color r="0" g="0" b="0" />
+            </font>
+          </style>
+        </connection>
+      </view>
+    </diagrams>
+  </views>
+</model>

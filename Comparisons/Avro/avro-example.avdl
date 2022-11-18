@@ -1,0 +1,7 @@
+protocol RedHat-Pipeline {
+    record InsightsStorageBroker {
+        string type = "service";
+        array<string> dependencies;
+        array<string> targets;
+    }
+}
