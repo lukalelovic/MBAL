@@ -1,0 +1,15 @@
+---
+systemName: Malsev-Basic-Example
+systemVersion: 0.0.1
+nodes:
+- nodeName: basic-service-1
+  nodeType: service
+  dependencies: []
+  targets:
+  - nodeName: basic-service-2
+- nodeName: basic-service-2
+  nodeType: service
+  dependencies:
+  - nodeName: basic-service-1
+  targets: []
+...
