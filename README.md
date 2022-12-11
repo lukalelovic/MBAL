@@ -1,6 +1,6 @@
-# Microservice Architectural Language for the Service View perspective (MALSEV)
+# Microservice Intermediate Representation Language (MIRL)
 
-YAML-based description language for describing MSA-based systems
+YAML-based description language for describing MSA-based systems in the Service View perspective
 
 Currently coupled with the diagrams Python library for generating a graphical model from the language
 
